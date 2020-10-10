@@ -12,6 +12,7 @@
    transition: 1s;
 }
 
+
 .nav-menu.active {
    width: 200px;
 }
@@ -38,18 +39,16 @@
 
 .nav-text {
    display: flex;
-   justify-content: start;
    align-items: center;
    list-style: none;
    height: 60px;
    width: 60px;
    transition: 1s;
-   /* border: 1px solid black; */
+   overflow: hidden;
 }
 
 .nav-text.active {
    display: flex;
-   justify-content: start;
    align-items: center;
    /* padding: 8px 0px 8px 16px; */
    list-style: none;

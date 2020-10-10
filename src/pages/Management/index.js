@@ -56,35 +56,49 @@ export default function Dashboard() {
    }
 
    return (
-      <div>
-         <div>
-            <select value={parking} onChange={e => setParking(e.target.value)}>
-               {parkings.map((parking, index) => {
-                  return (
-                     <option key={index} value={parking.id}>{parking.name}</option>
-                  )
-               })}
-            </select>
-            <button onClick={() => loadRegions()}>Search</button>
+      <div className="wrapper">
+         <div className="card">
+            <div className="selectDiv">
+               <div className="select">
+                  <select value={parking} onChange={e => setParking(e.target.value)}>
+                     {parkings.map((parking, index) => {
+                        return (
+                           <option key={index} value={parking.id}>{parking.name}</option>
+                        )
+                     })}
+                  </select>
+               </div>
+               
+               {/* <button onClick={() => loadRegions()}>Search</button> */}
+            </div>
+            
          </div>
-         <div>
-            <select value={region} onChange={e => setRegion(e.target.value)}>
-               {regions.map((region, index) => {
-                  return (
-                     <option key={index} value={region.id}>{region.name}</option>
-                  )
-               })}
-            </select>
-            <button onClick={() => loadSpots()}>Search</button>
+         <div className="card">
+            <div className="selectDiv">
+               <div className="select">
+                  <select value={region} onChange={e => setRegion(e.target.value)}>
+                     {regions.map((region, index) => {
+                        return (
+                           <option key={index} value={region.id}>{region.name}</option>
+                        )
+                     })}
+                  </select>
+               </div>
+               {/* <button onClick={() => loadSpots()}>Search</button> */}
+            </div>
          </div>         
-         <div>
-            <select value={spot} onChange={e => setSpot(e.target.value)}>
-               {spots.map((spot, index) => {
-                  return (
-                     <option key={index} value={spot.id}>{spot.id}</option>
-                  )
-               })}
-            </select>
+         <div className="card">
+            <div className="selectDiv">
+               <div className="select">
+                  <select value={spot} onChange={e => setSpot(e.target.value)}>
+                     {spots.map((spot, index) => {
+                        return (
+                           <option key={index} value={spot.id}>{spot.id}</option>
+                        )
+                     })}
+                  </select>
+               </div>
+            </div>
          </div>         
       </div>
    );
