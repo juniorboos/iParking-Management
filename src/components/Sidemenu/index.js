@@ -33,11 +33,11 @@ export default function Sidemenu() {
             </div> */}
             <nav className={sidemenu ? 'nav-menu active' : 'nav-menu'}>
             {/* <nav className={'nav-menu'}> */}
-               <Link to='#' className="menu-bars">
+               <Link to='#' className="menu-bars" onClick={showSidemenu}>
                   {sidemenu ? (
-                     <FaIcons.FaChevronLeft onClick={showSidemenu} />
+                     <FaIcons.FaChevronLeft  />
                   ) : (
-                     <FaIcons.FaChevronRight onClick={showSidemenu} />
+                     <FaIcons.FaChevronRight  />
                   )}
                   
                </Link>
