@@ -19,7 +19,6 @@ export default function Dashboard() {
          api.get('parkings')
             .then(response => {
                setParkings(response.data)
-               setParking('IPB')
                console.log("Parkings: ", response)
             })
       }
@@ -35,7 +34,6 @@ export default function Dashboard() {
             .then(response => {
                const reponseData = response.data
                setRegions(reponseData)
-               setRegion(reponseData[0].name)
                console.log("Regions: ", response)
             })
       } catch(err) {
@@ -60,20 +58,33 @@ export default function Dashboard() {
    return (
       <div>
          <div>
-            <input 
-               placeholder="Parking"
-               value = {parking}
-               onChange = {e => setParking(e.target.value)}
-            />
+            <select value={parking} onChange={e => setParking(e.target.value)}>
+               {parkings.map((parking, index) => {
+                  return (
+                     <option key={index} value={parking.id}>{parking.name}</option>
+                  )
+               })}
+            </select>
             <button onClick={() => loadRegions()}>Search</button>
          </div>
          <div>
-            <input 
-               placeholder="Region"
-               value = {region}
-               onChange = {e => setRegion(e.target.value)}
-            />
+            <select value={region} onChange={e => setRegion(e.target.value)}>
+               {regions.map((region, index) => {
+                  return (
+                     <option key={index} value={region.id}>{region.name}</option>
+                  )
+               })}
+            </select>
             <button onClick={() => loadSpots()}>Search</button>
+         </div>         
+         <div>
+            <select value={spot} onChange={e => setSpot(e.target.value)}>
+               {spots.map((spot, index) => {
+                  return (
+                     <option key={index} value={spot.id}>{spot.id}</option>
+                  )
+               })}
+            </select>
          </div>         
       </div>
    );
