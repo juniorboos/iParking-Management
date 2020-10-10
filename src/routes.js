@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
+import Sidemenu from './components/Sidemenu'
 import Dashboard from './pages/Dashboard';
 import Management from './pages/Management';
 // import Register from './pages/Register';
@@ -10,6 +10,7 @@ import Management from './pages/Management';
 export default function Routes() {
     return (
         <BrowserRouter>
+            <Sidemenu />
             <Switch>
                 <Route path="/" exact component={Dashboard} />
                 <Route path="/management" component={Management} />
