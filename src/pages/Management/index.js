@@ -10,9 +10,9 @@ export default function Dashboard() {
    const [regions, setRegions] = useState([])
    const [spots, setSpots] = useState([])
 
-   const [parking, setParking] = useState('')
-   const [region, setRegion] = useState('')
-   const [spot, setSpot] = useState('')
+   const [parking, setParking] = useState(null)
+   const [region, setRegion] = useState(null)
+   const [spot, setSpot] = useState(null)
 
 
    useEffect(() => {
@@ -30,8 +30,8 @@ export default function Dashboard() {
    },[])
 
    useEffect(() => {
-      console.log("Parking: ", parking)
-      if (parking !== '') {
+      setRegion(null)
+      if (parking !== null) {
          try {
             api.get(`parkings/${parking}`)
                .then(response => {
@@ -48,7 +48,9 @@ export default function Dashboard() {
    }, [parking]);
 
    useEffect(() => {
-      if(region !== '') {
+      setSpot(null)
+      if(region !== null) {
+         console.log("Region: ", region)
          try {
             api.get(`parkings/${parking}/${region}`)
                .then(response => {
@@ -62,7 +64,7 @@ export default function Dashboard() {
             alert('Erro ao encontrar spots')
          }
       }
-   },[region, parking])
+   },[region])
 
 
    return (
@@ -80,23 +82,25 @@ export default function Dashboard() {
                />
             </div>
          </div>
-         <div className="card" style={parkings === [] ? {display: 'none'}: null}>
+         <div className="card" style={parking === null ? {display: 'none'}: null}>
             <div className="selectDiv">
                <Select
                   className="select"
                   onChange={selectedOption => setRegion(selectedOption.value)}
                   options={regions}
                   isSearchable
+                  value={region !== null ? region.value : null}
                   placeholder="Select region"
                />
             </div>
          </div>         
-         <div className="card">
+         <div className="card" style={region === null ? {display: 'none'}: null}>
             <div className="selectDiv">
                <Select
                   className="select"
                   onChange={selectedOption => setSpot(selectedOption.value)}
                   options={spots}
+                  value={spot !== null ? spot.value : null}
                   isSearchable
                   placeholder="Select spot"
                />
