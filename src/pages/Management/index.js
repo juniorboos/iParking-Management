@@ -20,7 +20,7 @@ export default function Dashboard() {
          api.get('parkings')
             .then(response => {
                const formatArray = response.data.map(function(item) {
-                  return {value: item.id, label: item.name}
+                  return {... item, value: item.id, label: item.name}
                })
                setParkings(formatArray)
                console.log("Parkings: ", formatArray)
@@ -30,13 +30,14 @@ export default function Dashboard() {
    },[])
 
    useEffect(() => {
-      setRegion(null)
       if (parking !== null) {
+         setRegion(null)
+         console.log("Regionsss: ",region)
          try {
-            api.get(`parkings/${parking}`)
+            api.get(`parkings/${parking.id}`)
                .then(response => {
                   const formatArray = response.data.map(function(item) {
-                     return {value: item.id, label: item.name}
+                     return {... item, value: item.id, label: item.name}
                   })
                   setRegions(formatArray)
                   console.log("Regions: ", formatArray)
@@ -48,14 +49,14 @@ export default function Dashboard() {
    }, [parking]);
 
    useEffect(() => {
-      setSpot(null)
       if(region !== null) {
+         setSpot(null)
          console.log("Region: ", region)
          try {
-            api.get(`parkings/${parking}/${region}`)
+            api.get(`parkings/${parking.id}/${region.id}`)
                .then(response => {
                   const formatArray = response.data.map(function(item) {
-                     return {value: item.id, label: item.id}
+                     return {... item, value: item.id, label: item.id}
                   })
                   setSpots(formatArray)
                   console.log("Spots: ", formatArray)
@@ -70,41 +71,54 @@ export default function Dashboard() {
    return (
       <div className="wrapper">
          <div className="card">
-            <div className="selectDiv">
-               <Select
-                  label="Parking"
-                  className="select"
-                  onChange={selectedOption => setParking(selectedOption.value)}
-                  options={parkings}
-                  isSearchable
-                  is
-                  placeholder="Select parking"
-               />
-            </div>
+            <Select
+               label="Parking"
+               className="select"
+               onChange={selectedOption => setParking(selectedOption)}
+               options={parkings}
+               isSearchable
+               placeholder="Select parking"
+            />
+            {parking !== null && (
+               <div className="info">
+                  <p>{parking.name}</p>
+                  <p>{parking.coordinates}</p>
+                  <p>{parking.image}</p>
+               </div>
+            )}
+            
+
          </div>
          <div className="card" style={parking === null ? {display: 'none'}: null}>
-            <div className="selectDiv">
                <Select
                   className="select"
-                  onChange={selectedOption => setRegion(selectedOption.value)}
+                  onChange={selectedOption => setRegion(selectedOption)}
                   options={regions}
                   isSearchable
-                  value={region !== null ? region.value : null}
+                  value={region}
                   placeholder="Select region"
                />
-            </div>
+               {region !== null && (
+                  <div className="info">
+                     <p>{region.name}</p>
+                  </div>
+               )}
          </div>         
          <div className="card" style={region === null ? {display: 'none'}: null}>
-            <div className="selectDiv">
                <Select
                   className="select"
-                  onChange={selectedOption => setSpot(selectedOption.value)}
+                  onChange={selectedOption => setSpot(selectedOption)}
                   options={spots}
-                  value={spot !== null ? spot.value : null}
+                  value={spot}
                   isSearchable
                   placeholder="Select spot"
                />
-            </div>
+               {spot !== null && (
+                  <div className="info">
+                     <p>{spot.name}</p>
+                     <p>{spot.coordinates}</p>
+                  </div>
+               )}
          </div>         
       </div>
    );
