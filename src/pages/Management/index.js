@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 // import {FiLogIn} from 'react-icons/fi';
 // import {Link, useHistory} from 'react-router-dom'
 import api from '../../services/api'
-
+import Select from 'react-select';
 import './styles.css';
 
 export default function Dashboard() {
@@ -14,90 +14,92 @@ export default function Dashboard() {
    const [region, setRegion] = useState('')
    const [spot, setSpot] = useState('')
 
+
    useEffect(() => {
       const loadParkings = () => {
          api.get('parkings')
             .then(response => {
-               setParkings(response.data)
-               console.log("Parkings: ", response)
+               const formatArray = response.data.map(function(item) {
+                  return {value: item.id, label: item.name}
+               })
+               setParkings(formatArray)
+               console.log("Parkings: ", formatArray)
             })
       }
       loadParkings()
-      
    },[])
 
-   
-
-   const loadRegions = () => {
-      try {
-         api.get(`parkings/${parking}`)
-            .then(response => {
-               const reponseData = response.data
-               setRegions(reponseData)
-               console.log("Regions: ", response)
-            })
-      } catch(err) {
-         alert('Erro ao encontrar regiões')
+   useEffect(() => {
+      console.log("Parking: ", parking)
+      if (parking !== '') {
+         try {
+            api.get(`parkings/${parking}`)
+               .then(response => {
+                  const formatArray = response.data.map(function(item) {
+                     return {value: item.id, label: item.name}
+                  })
+                  setRegions(formatArray)
+                  console.log("Regions: ", formatArray)
+               })
+         } catch(err) {
+            alert('Erro ao encontrar regiões')
+         }
       }
-   }
+   }, [parking]);
 
-   const loadSpots = () => {
-      try {
-         api.get(`parkings/${parking}/${region}`)
-            .then(response => {
-               const reponseData = response.data
-               setSpots(reponseData)
-               setSpot(reponseData[0].id)
-               console.log("Spots: ", response)
-            })
-      } catch(err) {
-         alert('Erro ao encontrar spots')
+   useEffect(() => {
+      if(region !== '') {
+         try {
+            api.get(`parkings/${parking}/${region}`)
+               .then(response => {
+                  const formatArray = response.data.map(function(item) {
+                     return {value: item.id, label: item.id}
+                  })
+                  setSpots(formatArray)
+                  console.log("Spots: ", formatArray)
+               })
+         } catch(err) {
+            alert('Erro ao encontrar spots')
+         }
       }
-   }
+   },[region, parking])
+
 
    return (
       <div className="wrapper">
          <div className="card">
             <div className="selectDiv">
-               <div className="select">
-                  <select value={parking} onChange={e => setParking(e.target.value)}>
-                     {parkings.map((parking, index) => {
-                        return (
-                           <option key={index} value={parking.id}>{parking.name}</option>
-                        )
-                     })}
-                  </select>
-               </div>
-               
-               {/* <button onClick={() => loadRegions()}>Search</button> */}
+               <Select
+                  label="Parking"
+                  className="select"
+                  onChange={selectedOption => setParking(selectedOption.value)}
+                  options={parkings}
+                  isSearchable
+                  is
+                  placeholder="Select parking"
+               />
             </div>
-            
          </div>
-         <div className="card">
+         <div className="card" style={parkings === [] ? {display: 'none'}: null}>
             <div className="selectDiv">
-               <div className="select">
-                  <select value={region} onChange={e => setRegion(e.target.value)}>
-                     {regions.map((region, index) => {
-                        return (
-                           <option key={index} value={region.id}>{region.name}</option>
-                        )
-                     })}
-                  </select>
-               </div>
-               {/* <button onClick={() => loadSpots()}>Search</button> */}
+               <Select
+                  className="select"
+                  onChange={selectedOption => setRegion(selectedOption.value)}
+                  options={regions}
+                  isSearchable
+                  placeholder="Select region"
+               />
             </div>
          </div>         
          <div className="card">
             <div className="selectDiv">
-               <div className="select">
-                  <select value={spot} onChange={e => setSpot(e.target.value)}>
-                     {spots.map((spot, index) => {
-                        return (
-                           <option key={index} value={spot.id}>{spot.id}</option>
-                        )
-                     })}
-                  </select>
-               </div>
+               <Select
+                  className="select"
+                  onChange={selectedOption => setSpot(selectedOption.value)}
+                  options={spots}
+                  isSearchable
+                  placeholder="Select spot"
+               />
             </div>
          </div>         
       </div>

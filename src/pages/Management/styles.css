@@ -35,41 +35,11 @@
 
 .select {
    width: 80%;
-   height: 70px;
+   /* height: 70px; */
    border-radius: 20px;
    font-size: 20px;
    padding: 20px;
    margin-right: 20px;
    /* border: 1px blue solid; */
 
-}
-
-.select {
-   display: flex;
-   grid-template-areas: "select";
-   align-items: center;
-   width: 80%;
-   height: 50px;
-   border: 1px solid var(--select-border);
-   border-radius: 0.25em;
-   padding: 0.25em 0.5em;
-   font-size: 1.25rem;
-   cursor: pointer;
-   line-height: 1.1;
-   background-color: #fff;
-   background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
-}
-
-.select::after {
-   justify-self: end;
-   content: "";
-   width: 0.8em;
-   height: 0.5em;
-   background-color: var(--select-arrow);
-   clip-path: polygon(100% 0%, 0 0%, 50% 100%);
-}
-
-.select,
-.select:after {
-   grid-area: select;
 }
