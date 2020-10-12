@@ -22,7 +22,7 @@
    max-width: 900px;
    min-height: 100px;
    max-height: 1800px;
-   height: 1800px;
+   /* height: 1800px; */
    align-items: center;
    justify-content: center;
    padding: 20px;

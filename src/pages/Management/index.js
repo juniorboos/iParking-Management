@@ -20,7 +20,7 @@ export default function Dashboard() {
          api.get('parkings')
             .then(response => {
                const formatArray = response.data.map(function(item) {
-                  return {... item, value: item.id, label: item.name}
+                  return {...item, value: item.id, label: item.name}
                })
                setParkings(formatArray)
                console.log("Parkings: ", formatArray)
@@ -37,7 +37,7 @@ export default function Dashboard() {
             api.get(`parkings/${parking.id}`)
                .then(response => {
                   const formatArray = response.data.map(function(item) {
-                     return {... item, value: item.id, label: item.name}
+                     return {...item, value: item.id, label: item.name}
                   })
                   setRegions(formatArray)
                   console.log("Regions: ", formatArray)
@@ -56,7 +56,7 @@ export default function Dashboard() {
             api.get(`parkings/${parking.id}/${region.id}`)
                .then(response => {
                   const formatArray = response.data.map(function(item) {
-                     return {... item, value: item.id, label: item.id}
+                     return {...item, value: item.id, label: item.id}
                   })
                   setSpots(formatArray)
                   console.log("Spots: ", formatArray)
