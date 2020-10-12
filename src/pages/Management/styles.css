@@ -45,12 +45,38 @@
    /* border-radius: 20px; */
    font-size: 20px;
    padding: 20px;
-   /* border: 1px blue solid; */
 
 }
 
 .info {
+   /* border: 1px blue solid; */
+   display: flex;
+   flex-direction: column;
    width: 100%;
    padding-left: 20px;
    padding-right: 20px;
+}
+
+.info-label {
+   font-size: 16px;
+   color: #000;
+   font-weight: 500;
+}
+.info-text {
+   display: inline;
+   padding-left: 8px;
+   font-size: 16px;
+   font-weight: 400;
+   color: #6d6d6d;
+}
+
+.info-image {
+   width: 100%;
+   display: flex;
+   text-align: center;
+   height: 220px;
+   object-fit: cover;
+   border-radius: 10px;
+   margin-bottom: 16px;
+
 }

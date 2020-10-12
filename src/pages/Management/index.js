@@ -32,7 +32,6 @@ export default function Dashboard() {
    useEffect(() => {
       if (parking !== null) {
          setRegion(null)
-         console.log("Regionsss: ",region)
          try {
             api.get(`parkings/${parking.id}`)
                .then(response => {
@@ -65,7 +64,7 @@ export default function Dashboard() {
             alert('Erro ao encontrar spots')
          }
       }
-   },[region])
+   }, [region])
 
 
    return (
@@ -81,9 +80,9 @@ export default function Dashboard() {
             />
             {parking !== null && (
                <div className="info">
-                  <p>{parking.name}</p>
-                  <p>{parking.coordinates}</p>
-                  <p>{parking.image}</p>
+                  <img className="info-image" src={parking.image} />
+                  <p className="info-label">Name:<p className="info-text">{parking.name}</p></p>
+                  <p className="info-label">Coordinates:<p className="info-text">{parking.coordinates[0]}, {parking.coordinates[1]}</p></p>
                </div>
             )}
             
@@ -100,7 +99,7 @@ export default function Dashboard() {
                />
                {region !== null && (
                   <div className="info">
-                     <p>{region.name}</p>
+                     <p className="info-label">Name:<p className="info-text">{region.name}</p></p>
                   </div>
                )}
          </div>         
@@ -115,8 +114,8 @@ export default function Dashboard() {
                />
                {spot !== null && (
                   <div className="info">
-                     <p>{spot.name}</p>
-                     <p>{spot.coordinates}</p>
+                     <p className="info-label">ID:<p className="info-text">{spot.id}</p></p>
+                     <p className="info-label">Coordinates:<p className="info-text">{spot.coordinates[0]}, {spot.coordinates[1]}</p></p>
                   </div>
                )}
          </div>         
