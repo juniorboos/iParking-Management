@@ -17,6 +17,11 @@ export default function Dashboard() {
 
    const [modalShow, setModalShow] = useState(true)
 
+   const vehicleOptions = [
+      {value: 'bicycle', label: 'Bicycle'},
+      {value: 'car', label: 'Car'},
+      {value: 'motorcycle', label: 'Motorcycle'}
+   ]
 
    useEffect(() => {
       const loadParkings = () => {
@@ -160,7 +165,7 @@ export default function Dashboard() {
             <form className="form">
                <div className="inputDiv">
                   <label className="inputLabel" >Name</label>
-                  <input className="input" type="text" name="name" id="" placeholder="Parking name"/>
+                  <input className="input" type="text" name="name" id="" />
                </div>
                <div className="inputDiv">
                   <label className="inputLabel">Description</label>
@@ -169,16 +174,24 @@ export default function Dashboard() {
                <div className="smallInputDiv">
                   <div className="inputDiv">
                      <label className="inputLabel" >Max. parking duration (hours)</label>
-                     <input className="input" type="number" min={0} max={24} name="name" id="" placeholder="Parking name"/>
+                     <input className="input" type="number" min={0} max={24} name="name" defaultValue={0}/>
                   </div>
                   <div className="inputDiv">
                      <label className="inputLabel" >Total spots</label>
-                     <input className="input" type="text" name="name" id="" placeholder="Parking name"/>
+                     <input className="input" type="number" min={0} name="name" defaultValue={0}/>
                   </div>
                </div>
                <div className="inputDiv">
                   <label className="inputLabel" >Vehicles allowed</label>
-                  <input className="input" type="text" name="name" id="" placeholder="Parking name"/>
+                  <Select
+                     className="input"
+                     isMulti
+                     name="vehicles"
+                     options={vehicleOptions}
+                     className="basic-multi-select"
+                     classNamePrefix="select"
+                  />
+                  <br/>
                </div>
                <div className="inputDiv">
                   <label className="inputLabel" >Coordinates</label>
