@@ -82,7 +82,12 @@ export default function Dashboard() {
                <div className="info">
                   <img className="info-image" src={parking.image} />
                   <p className="info-label">Name:<p className="info-text">{parking.name}</p></p>
+                  <p className="info-label">Max. parking duration:<p className="info-text">8h</p></p>
+                  <p className="info-label">Vehicles allowed:<p className="info-text">car, bike</p></p>
+                  <p className="info-label">Total spots:<p className="info-text">300</p></p>
                   <p className="info-label">Coordinates:<p className="info-text">{parking.coordinates[0]}, {parking.coordinates[1]}</p></p>
+                  <p className="info-label">Address:<p className="info-text">5300-252, Bragança, Portugal</p></p>
+                  <p className="info-label">Description:<p className="info-text">University parking located in the center of Bragança.</p></p>
                </div>
             )}
             
@@ -120,5 +125,6 @@ export default function Dashboard() {
                )}
          </div>         
       </div>
+      
    );
 };
