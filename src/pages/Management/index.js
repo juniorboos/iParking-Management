@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {MdAdd, MdEdit} from 'react-icons/md';
-// import {Link, useHistory} from 'react-router-dom'
+import Modal from 'react-modal'
 import api from '../../services/api'
+import FormModal from '../../components/FormModal'
 import Select from 'react-select';
 import './styles.css';
 
@@ -13,6 +14,8 @@ export default function Dashboard() {
    const [parking, setParking] = useState(null)
    const [region, setRegion] = useState(null)
    const [spot, setSpot] = useState(null)
+
+   const [modalShow, setModalShow] = useState(false)
 
 
    useEffect(() => {
@@ -66,6 +69,10 @@ export default function Dashboard() {
       }
    }, [region])
 
+   function addParking(parking = null) {
+
+   }
+
 
    return (
       <div className="wrapper">
@@ -80,8 +87,8 @@ export default function Dashboard() {
                   placeholder="Select parking"
                />
                <div className="options">
-                  <button className="buttonAdd"><MdAdd size={24} color="#FFF"/></button>   
-                  <button className="buttonEdit"><MdEdit size={24} color="#FFF"/></button>   
+                  <button className="buttonAdd" onClick={() => setModalShow(true)}><MdAdd size={24} color="#FFF"/></button>   
+                  <button className="buttonEdit" onClick={() => setModalShow(true)}><MdEdit size={24} color="#FFF"/></button>   
                </div> 
             </div>
             
@@ -140,7 +147,22 @@ export default function Dashboard() {
                      <p className="info-label">Coordinates:<p className="info-text">{spot.coordinates[0]}, {spot.coordinates[1]}</p></p>
                   </div>
                )}
-         </div>         
+         </div>
+         <Modal
+            className="formModal"
+            overlayClassName="overlay"
+            isOpen={modalShow}
+            closeTimeoutMS={150}
+            contentLabel="modalB"
+            shouldCloseOnOverlayClick={true}
+            onRequestClose={() => setModalShow(false)}
+            >
+            <h1>Forms!</h1>
+            <form>
+              
+            </form>
+         </Modal>
+            
       </div>
       
    );
