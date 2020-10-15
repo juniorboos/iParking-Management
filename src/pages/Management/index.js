@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-// import {FiLogIn} from 'react-icons/fi';
+import {MdAdd, MdEdit} from 'react-icons/md';
 // import {Link, useHistory} from 'react-router-dom'
 import api from '../../services/api'
 import Select from 'react-select';
@@ -70,14 +70,21 @@ export default function Dashboard() {
    return (
       <div className="wrapper">
          <div className="card">
-            <Select
-               label="Parking"
-               className="select"
-               onChange={selectedOption => setParking(selectedOption)}
-               options={parkings}
-               isSearchable
-               placeholder="Select parking"
-            />
+            <div className="selectHeader">
+              <Select
+                  label="Parking"
+                  className="select"
+                  onChange={selectedOption => setParking(selectedOption)}
+                  options={parkings}
+                  isSearchable
+                  placeholder="Select parking"
+               />
+               <div className="options">
+                  <button className="buttonAdd"><MdAdd size={24} color="#FFF"/></button>   
+                  <button className="buttonEdit"><MdEdit size={24} color="#FFF"/></button>   
+               </div> 
+            </div>
+            
             {parking !== null && (
                <div className="info">
                   <img className="info-image" src={parking.image} />
@@ -90,10 +97,9 @@ export default function Dashboard() {
                   <p className="info-label">Description:<p className="info-text">University parking located in the center of Bragança.</p></p>
                </div>
             )}
-            
-
          </div>
          <div className="card" style={parking === null ? {display: 'none'}: null}>
+            <div className="selectHeader">
                <Select
                   className="select"
                   onChange={selectedOption => setRegion(selectedOption)}
@@ -102,6 +108,11 @@ export default function Dashboard() {
                   value={region}
                   placeholder="Select region"
                />
+               <div className="options">
+                  <button className="buttonAdd"><MdAdd size={24} color="#FFF"/></button>   
+                  <button className="buttonEdit"><MdEdit size={24} color="#FFF"/></button>   
+               </div>
+            </div>
                {region !== null && (
                   <div className="info">
                      <p className="info-label">Name:<p className="info-text">{region.name}</p></p>
@@ -109,6 +120,7 @@ export default function Dashboard() {
                )}
          </div>         
          <div className="card" style={region === null ? {display: 'none'}: null}>
+            <div className="selectHeader">
                <Select
                   className="select"
                   onChange={selectedOption => setSpot(selectedOption)}
@@ -117,6 +129,11 @@ export default function Dashboard() {
                   isSearchable
                   placeholder="Select spot"
                />
+               <div className="options">
+                  <button className="buttonAdd"><MdAdd size={24} color="#FFF"/></button>   
+                  <button className="buttonEdit"><MdEdit size={24} color="#FFF"/></button>   
+               </div>
+            </div>
                {spot !== null && (
                   <div className="info">
                      <p className="info-label">ID:<p className="info-text">{spot.id}</p></p>
