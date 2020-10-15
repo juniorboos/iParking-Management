@@ -15,7 +15,7 @@ export default function Dashboard() {
    const [region, setRegion] = useState(null)
    const [spot, setSpot] = useState(null)
 
-   const [modalShow, setModalShow] = useState(false)
+   const [modalShow, setModalShow] = useState(true)
 
 
    useEffect(() => {
@@ -157,9 +157,44 @@ export default function Dashboard() {
             shouldCloseOnOverlayClick={true}
             onRequestClose={() => setModalShow(false)}
             >
-            <h1>Forms!</h1>
-            <form>
-              
+            <form className="form">
+               <div className="inputDiv">
+                  <label className="inputLabel" >Name</label>
+                  <input className="input" type="text" name="name" id="" placeholder="Parking name"/>
+               </div>
+               <div className="inputDiv">
+                  <label className="inputLabel">Description</label>
+                  <textarea rows={2} className="input" style={{height: '96px', resize: 'vertical'}} type="text" name="name" id="" placeholder=""/>
+               </div>
+               <div className="smallInputDiv">
+                  <div className="inputDiv">
+                     <label className="inputLabel" >Max. parking duration (hours)</label>
+                     <input className="input" type="number" min={0} max={24} name="name" id="" placeholder="Parking name"/>
+                  </div>
+                  <div className="inputDiv">
+                     <label className="inputLabel" >Total spots</label>
+                     <input className="input" type="text" name="name" id="" placeholder="Parking name"/>
+                  </div>
+               </div>
+               <div className="inputDiv">
+                  <label className="inputLabel" >Vehicles allowed</label>
+                  <input className="input" type="text" name="name" id="" placeholder="Parking name"/>
+               </div>
+               <div className="inputDiv">
+                  <label className="inputLabel" >Coordinates</label>
+                  <div >
+                     <input className="input" type="text" name="name" id="" placeholder="Latitude"/>
+                     <input className="input" type="text" name="name" id="" placeholder="Longitude"/>
+                  </div>
+               </div>
+               <div className="inputDiv">
+                  <label className="inputLabel">Address</label>
+                  <input className="input" type="text" name="name" id="" placeholder="Parking name"/>
+               </div>
+               <div className="inputDiv">
+                  <label className="inputLabel">Image URL</label>
+                  <input className="input" type="text" name="name" id="" placeholder="URL"/>
+               </div>
             </form>
          </Modal>
             

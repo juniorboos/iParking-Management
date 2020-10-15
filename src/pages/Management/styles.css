@@ -1,3 +1,27 @@
+.inputDiv {
+   display: flex;
+   flex-direction: column;
+}
+
+.smallInputDiv {
+   display: flex;
+   justify-content: space-between;
+}
+
+.inputLabel {
+   font-size: 16px;
+   margin-bottom: 8px;
+   font-weight: 500;
+}
+
+.input {
+   height: 48px;
+   padding: 8px;
+   margin-bottom: 20px;
+   border-radius: 10px;
+   border: 1px solid rgb(160, 160, 160);
+}
+
 .wrapper {
    display: flex;
    flex-direction: column;
@@ -19,9 +43,15 @@
    margin-right: auto;
    width: 700px;
    background-color: rgb(255, 255, 255);
-   opacity: 1;
+   /* opacity: 1; */
    border-radius: 20px;
    padding: 20px;
+   overflow: auto;
+}
+
+.form {
+   display: flex;
+   flex-direction: column;
 }
 
 .overlay {
