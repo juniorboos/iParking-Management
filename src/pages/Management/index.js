@@ -202,7 +202,7 @@ export default function Dashboard() {
                </div>
                <div className="inputDiv">
                   <label className="inputLabel">Address</label>
-                  <input className="input" type="text" name="name" id="" placeholder="Parking name"/>
+                  <input className="input" type="text" name="name" id="" placeholder="Rua João Carvalho, nº 537, Bragança, Portugal, 5300-000"/>
                </div>
                <div className="inputDiv">
                   <label className="inputLabel">Image URL</label>
