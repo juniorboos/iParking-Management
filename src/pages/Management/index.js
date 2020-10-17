@@ -103,8 +103,8 @@ export default function Dashboard() {
                   placeholder="Select parking"
                />
                <div className="options">
-                  <button className="buttonAdd" onClick={() => setModalShow(true)}><MdAdd size={24} color="#FFF"/></button>   
-                  <button className="buttonEdit" onClick={() => setModalShow(true)}><MdEdit size={24} color="#FFF"/></button>   
+                  <button className="button add" onClick={() => setModalShow(true)}><MdAdd size={24} color="#FFF"/></button>   
+                  <button className="button edit" onClick={() => setModalShow(true)}><MdEdit size={24} color="#FFF"/></button>   
                </div> 
             </div>
             
@@ -185,11 +185,11 @@ export default function Dashboard() {
                <div className="smallInputDiv">
                   <div className="inputDiv">
                      <label className="inputLabel" >Max. parking duration (hours)</label>
-                     <input className="input" type="number" min={0} max={24} name="name" defaultValue={0}/>
+                     <input className="input" style={{width: 150, textAlign: 'center'}} type="number" min={0} max={24} name="name" defaultValue={0}/>
                   </div>
                   <div className="inputDiv">
                      <label className="inputLabel" >Total spots</label>
-                     <input className="input" type="number" min={0} name="name" defaultValue={0}/>
+                     <input className="input" style={{width: 150, textAlign: 'center'}} type="number" min={0} name="name" defaultValue={0}/>
                   </div>
                </div>
                <div className="inputDiv">
@@ -207,9 +207,9 @@ export default function Dashboard() {
                </div>
                <div className="inputDiv">
                   <label className="inputLabel" >Coordinates</label>
-                  <div >
-                     <input className="input" type="text" name="name" id="" placeholder="Latitude"/>
-                     <input className="input" type="text" name="name" id="" placeholder="Longitude"/>
+                  <div>
+                     <input className="input" style={{width: 150, textAlign: 'center', marginRight: 6}} type="text" name="name" id="" placeholder="Latitude"/>
+                     <input className="input" style={{width: 150, textAlign: 'center'}} type="text" name="name" id="" placeholder="Longitude"/>
                   </div>
                </div>
                <div className="inputDiv">
@@ -221,8 +221,11 @@ export default function Dashboard() {
                   <input className="input" type="text" name="name" id="" placeholder="URL"/>
                </div>
             </form>
+            <div className="modalFooter">
+               <button className="footerButton">Cadastrar</button>
+            </div>
          </Modal>
-            
+         
       </div>
       
    );
