@@ -78,6 +78,17 @@ export default function Dashboard() {
 
    }
 
+   const customStyles = {
+      control: base => ({
+        ...base,
+        height: 48,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'rgb(160, 160, 160)',
+        fontSize: 18
+      })
+   };
+
 
    return (
       <div className="wrapper">
@@ -184,6 +195,7 @@ export default function Dashboard() {
                <div className="inputDiv">
                   <label className="inputLabel" >Vehicles allowed</label>
                   <Select
+                     styles={customStyles}
                      className="input"
                      isMulti
                      name="vehicles"
