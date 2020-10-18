@@ -52,6 +52,13 @@
 }
 
 .form {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   height: 100%;
+}
+
+.formDiv {
    padding: 20px;
    display: flex;
    flex-direction: column;

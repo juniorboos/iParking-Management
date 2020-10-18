@@ -174,56 +174,59 @@ export default function Dashboard() {
             onRequestClose={() => setModalShow(false)}
             >
             <form className="form">
-               <div className="inputDiv">
-                  <label className="inputLabel" >Name</label>
-                  <input className="input" type="text" name="name" id="" />
-               </div>
-               <div className="inputDiv">
-                  <label className="inputLabel">Description</label>
-                  <textarea rows={2} className="input" style={{height: '96px', resize: 'vertical'}} type="text" name="name" id="" placeholder=""/>
-               </div>
-               <div className="smallInputDiv">
+               <div className="formDiv">
                   <div className="inputDiv">
-                     <label className="inputLabel" >Max. parking duration (hours)</label>
-                     <input className="input" style={{width: 150, textAlign: 'center'}} type="number" min={0} max={24} name="name" defaultValue={0}/>
+                     <label className="inputLabel" >Name</label>
+                     <input className="input" type="text" name="name" id="" />
                   </div>
                   <div className="inputDiv">
-                     <label className="inputLabel" >Total spots</label>
-                     <input className="input" style={{width: 150, textAlign: 'center'}} type="number" min={0} name="name" defaultValue={0}/>
+                     <label className="inputLabel">Description</label>
+                     <textarea rows={2} className="input" style={{height: '96px', resize: 'vertical'}} type="text" name="name" id="" placeholder=""/>
+                  </div>
+                  <div className="smallInputDiv">
+                     <div className="inputDiv">
+                        <label className="inputLabel" >Max. parking duration (hours)</label>
+                        <input className="input" style={{width: 150, textAlign: 'center'}} type="number" min={0} max={24} name="name" defaultValue={0}/>
+                     </div>
+                     <div className="inputDiv">
+                        <label className="inputLabel" >Total spots</label>
+                        <input className="input" style={{width: 150, textAlign: 'center'}} type="number" min={0} name="name" defaultValue={0}/>
+                     </div>
+                  </div>
+                  <div className="inputDiv">
+                     <label className="inputLabel" >Vehicles allowed</label>
+                     <Select
+                        styles={customStyles}
+                        className="input"
+                        isMulti
+                        name="vehicles"
+                        options={vehicleOptions}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                     />
+                     <br/>
+                  </div>
+                  <div className="inputDiv">
+                     <label className="inputLabel" >Coordinates</label>
+                     <div>
+                        <input className="input" style={{width: 150, textAlign: 'center', marginRight: 6}} type="text" name="name" id="" placeholder="Latitude"/>
+                        <input className="input" style={{width: 150, textAlign: 'center'}} type="text" name="name" id="" placeholder="Longitude"/>
+                     </div>
+                  </div>
+                  <div className="inputDiv">
+                     <label className="inputLabel">Address</label>
+                     <input className="input" type="text" name="name" id="" placeholder="Rua João Carvalho, nº 537, Bragança, Portugal, 5300-000"/>
+                  </div>
+                  <div className="inputDiv">
+                     <label className="inputLabel">Image URL</label>
+                     <input className="input" type="text" name="name" id="" placeholder="URL"/>
                   </div>
                </div>
-               <div className="inputDiv">
-                  <label className="inputLabel" >Vehicles allowed</label>
-                  <Select
-                     styles={customStyles}
-                     className="input"
-                     isMulti
-                     name="vehicles"
-                     options={vehicleOptions}
-                     className="basic-multi-select"
-                     classNamePrefix="select"
-                  />
-                  <br/>
-               </div>
-               <div className="inputDiv">
-                  <label className="inputLabel" >Coordinates</label>
-                  <div>
-                     <input className="input" style={{width: 150, textAlign: 'center', marginRight: 6}} type="text" name="name" id="" placeholder="Latitude"/>
-                     <input className="input" style={{width: 150, textAlign: 'center'}} type="text" name="name" id="" placeholder="Longitude"/>
-                  </div>
-               </div>
-               <div className="inputDiv">
-                  <label className="inputLabel">Address</label>
-                  <input className="input" type="text" name="name" id="" placeholder="Rua João Carvalho, nº 537, Bragança, Portugal, 5300-000"/>
-               </div>
-               <div className="inputDiv">
-                  <label className="inputLabel">Image URL</label>
-                  <input className="input" type="text" name="name" id="" placeholder="URL"/>
+               
+               <div className="modalFooter">
+                  <button className="footerButton">Cadastrar</button>
                </div>
             </form>
-            <div className="modalFooter">
-               <button className="footerButton">Cadastrar</button>
-            </div>
          </Modal>
          
       </div>
