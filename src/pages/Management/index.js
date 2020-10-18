@@ -15,7 +15,17 @@ export default function Dashboard() {
    const [region, setRegion] = useState(null)
    const [spot, setSpot] = useState(null)
 
-   const [modalShow, setModalShow] = useState(true)
+   const [modalShow, setModalShow] = useState(false)
+
+   const [name, setName] = useState('')
+   const [maxDuration, setMaxDuration] = useState('')
+   const [vehiclesAllowed, setVehiclesAllowed] = useState([])
+   const [totalSpots, setTotalSpots] = useState('')
+   const [latitude, setLatitude] = useState('')
+   const [longitude, setLongitude] = useState('')
+   const [address, setAddress] = useState('')
+   const [description, setDescription] = useState('')
+   const [image, setImage] = useState('')
 
    const vehicleOptions = [
       {value: 'bicycle', label: 'Bicycle'},
@@ -23,17 +33,18 @@ export default function Dashboard() {
       {value: 'motorcycle', label: 'Motorcycle'}
    ]
 
-   useEffect(() => {
-      const loadParkings = () => {
-         api.get('parkings')
-            .then(response => {
-               const formatArray = response.data.map(function(item) {
-                  return {...item, value: item.id, label: item.name}
-               })
-               setParkings(formatArray)
-               console.log("Parkings: ", formatArray)
+   const loadParkings = () => {
+      api.get('parkings')
+         .then(response => {
+            const formatArray = response.data.map(function(item) {
+               return {...item, value: item.id, label: item.name}
             })
-      }
+            setParkings(formatArray)
+            console.log("Parkings: ", formatArray)
+         })
+   }
+
+   useEffect(() => {
       loadParkings()
    },[])
 
@@ -74,8 +85,33 @@ export default function Dashboard() {
       }
    }, [region])
 
-   function addParking(parking = null) {
+   async function addParking(e) {
+      e.preventDefault()
       console.log("Adicionando")
+
+      const coordinates = [latitude, longitude]
+
+      const data = {
+         name,
+         maxDuration,
+         vehiclesAllowed,
+         totalSpots,
+         coordinates,
+         address,
+         description,
+         image
+      }
+
+      console.log(data)
+
+      try {
+         await api.post('parkings', data)
+         setModalShow(false)
+         loadParkings()
+         alert('Parking registered successfully!')
+      } catch (err) {
+         alert('Error registering parking, try again.')
+      }
    }
 
    const customStyles = {
@@ -95,6 +131,7 @@ export default function Dashboard() {
          <div className="card">
             <div className="selectHeader">
               <Select
+                  styles={customStyles}
                   label="Parking"
                   className="select"
                   onChange={selectedOption => setParking(selectedOption)}
@@ -124,6 +161,7 @@ export default function Dashboard() {
          <div className="card" style={parking === null ? {display: 'none'}: null}>
             <div className="selectHeader">
                <Select
+                  styles={customStyles}
                   className="select"
                   onChange={selectedOption => setRegion(selectedOption)}
                   options={regions}
@@ -132,9 +170,9 @@ export default function Dashboard() {
                   placeholder="Select region"
                />
                <div className="options">
-                  <button className="buttonAdd"><MdAdd size={24} color="#FFF"/></button>   
-                  <button className="buttonEdit"><MdEdit size={24} color="#FFF"/></button>   
-               </div>
+                  <button className="button add" onClick={() => setModalShow(true)}><MdAdd size={24} color="#FFF"/></button>   
+                  <button className="button edit" onClick={() => setModalShow(true)}><MdEdit size={24} color="#FFF"/></button>   
+               </div> 
             </div>
                {region !== null && (
                   <div className="info">
@@ -153,9 +191,9 @@ export default function Dashboard() {
                   placeholder="Select spot"
                />
                <div className="options">
-                  <button className="buttonAdd"><MdAdd size={24} color="#FFF"/></button>   
-                  <button className="buttonEdit"><MdEdit size={24} color="#FFF"/></button>   
-               </div>
+                  <button className="button add" onClick={() => setModalShow(true)}><MdAdd size={24} color="#FFF"/></button>   
+                  <button className="button edit" onClick={() => setModalShow(true)}><MdEdit size={24} color="#FFF"/></button>   
+               </div> 
             </div>
                {spot !== null && (
                   <div className="info">
@@ -173,28 +211,30 @@ export default function Dashboard() {
             shouldCloseOnOverlayClick={true}
             onRequestClose={() => setModalShow(false)}
             >
-               <div className="form">
+            <form className="form" onSubmit={addParking}>
+               <div className="formDiv">
                   <div className="inputDiv">
                      <label className="inputLabel" >Name</label>
-                     <input className="input" type="text" name="name" id="" />
+                     <input className="input" type="text" name="name" onChange={e => setName(e.target.value)} />
                   </div>
                   <div className="inputDiv">
                      <label className="inputLabel">Description</label>
-                     <textarea rows={2} className="input" style={{height: '96px', resize: 'vertical'}} type="text" name="name" id="" placeholder=""/>
+                     <textarea rows={2} className="input" style={{height: '96px', resize: 'vertical'}} type="text" name="name" onChange={e => setDescription(e.target.value)} placeholder=""/>
                   </div>
                   <div className="smallInputDiv">
                      <div className="inputDiv">
                         <label className="inputLabel" >Max. parking duration (hours)</label>
-                        <input className="input" style={{width: 150, textAlign: 'center'}} type="number" min={0} max={24} name="name" defaultValue={0}/>
+                        <input className="input" style={{width: 150, textAlign: 'center'}} type="number" min={0} max={24} name="name" defaultValue={0} onChange={e => setMaxDuration(e.target.value)}/>
                      </div>
                      <div className="inputDiv">
                         <label className="inputLabel" >Total spots</label>
-                        <input className="input" style={{width: 150, textAlign: 'center'}} type="number" min={0} name="name" defaultValue={0}/>
+                        <input className="input" style={{width: 150, textAlign: 'center'}} type="number" min={0} name="name" defaultValue={0} onChange={e => setTotalSpots(e.target.value)}/>
                      </div>
                   </div>
                   <div className="inputDiv">
                      <label className="inputLabel" >Vehicles allowed</label>
                      <Select
+                        onChange={(selectedOption, newValue) => setVehiclesAllowed([ ... vehiclesAllowed, newValue.option.label])}
                         styles={customStyles}
                         className="input"
                         isMulti
@@ -208,24 +248,26 @@ export default function Dashboard() {
                   <div className="inputDiv">
                      <label className="inputLabel" >Coordinates</label>
                      <div>
-                        <input className="input" style={{width: 150, textAlign: 'center', marginRight: 6}} type="text" name="name" id="" placeholder="Latitude"/>
-                        <input className="input" style={{width: 150, textAlign: 'center'}} type="text" name="name" id="" placeholder="Longitude"/>
+                        <input className="input" style={{width: 150, textAlign: 'center', marginRight: 6}} type="text" name="name" onChange={e => setLatitude(e.target.value)} placeholder="Latitude"/>
+                        <input className="input" style={{width: 150, textAlign: 'center'}} type="text" name="name" onChange={e => setLongitude(e.target.value)} placeholder="Longitude"/>
                      </div>
                   </div>
                   <div className="inputDiv">
                      <label className="inputLabel">Address</label>
-                     <input className="input" type="text" name="name" id="" placeholder="Rua João Carvalho, nº 537, Bragança, Portugal, 5300-000"/>
+                     <input className="input" type="text" name="name" onChange={e => setAddress(e.target.value)} placeholder="Rua João Carvalho, nº 537, Bragança, Portugal, 5300-000"/>
                   </div>
                   <div className="inputDiv">
                      <label className="inputLabel">Image URL</label>
-                     <input className="input" type="text" name="name" id="" placeholder="URL"/>
+                     <input className="input" type="text" name="name" onChange={e => setImage(e.target.value)} placeholder="URL"/>
                   </div>
                </div>
                
                <div className="modalFooter">
-                  <button onClick={addParking} className="footerButton add">Submit</button>
+                  <button type="submit" className="footerButton add">Submit</button>
                </div>
+            </form>
          </Modal>
+         
       </div>
       
    );
