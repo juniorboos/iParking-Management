@@ -75,7 +75,7 @@ export default function Dashboard() {
    }, [region])
 
    function addParking(parking = null) {
-
+      console.log("Adicionando")
    }
 
    const customStyles = {
@@ -173,8 +173,7 @@ export default function Dashboard() {
             shouldCloseOnOverlayClick={true}
             onRequestClose={() => setModalShow(false)}
             >
-            <form className="form">
-               <div className="formDiv">
+               <div className="form">
                   <div className="inputDiv">
                      <label className="inputLabel" >Name</label>
                      <input className="input" type="text" name="name" id="" />
@@ -224,11 +223,9 @@ export default function Dashboard() {
                </div>
                
                <div className="modalFooter">
-                  <button className="footerButton">Cadastrar</button>
+                  <button onClick={addParking} className="footerButton add">Submit</button>
                </div>
-            </form>
          </Modal>
-         
       </div>
       
    );
