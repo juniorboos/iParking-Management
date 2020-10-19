@@ -31,7 +31,7 @@
 }
 
 .modalFooter {
-   bottom: 0;
+   display: flex;
    min-height: 60px;
    overflow: hidden;
 }
@@ -95,4 +95,8 @@
 
 .edit {
    background-color: #153ae2
+}
+
+.delete {
+   background-color: #e21515
 }
