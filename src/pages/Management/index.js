@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {MdAdd, MdEdit} from 'react-icons/md';
-import Modal from 'react-modal'
 import api from '../../services/api'
 import FormModal from '../../components/FormModal'
 import Select from 'react-select';
@@ -16,7 +15,7 @@ export default function Dashboard() {
    const [spot, setSpot] = useState(null)
 
    const [modalShow, setModalShow] = useState(false)
-   const [modalOptions, setModalOptions] = useState({})
+   const [modalOptions, setModalOptions] = useState({action: '', type: '', object: null})
 
    const loadParkings = () => {
       api.get('parkings')
@@ -83,16 +82,16 @@ export default function Dashboard() {
       })
    };
 
-   function callModal(action, type, object) {
-      if (  (action == "edit" && type == "parking" && parking == null) ||
-            (action == "edit" && type == "region" && region == null) ||
-            (action == "edit" && type == "spot" && spot == null)) {
-         alert("Select a "+ type+ "!")
+   function callModal(action, type, object = null) {
+      if (  (action === "edit" && type === "parking" && parking === null) ||
+            (action === "edit" && type === "region" && region === null) ||
+            (action === "edit" && type === "spot" && spot === null)) {
+         alert("Select a "+ type + "!")
       } else {
          setModalShow(true)
          setModalOptions({
             action: action, 
-            type: type, 
+            type: type,
             object: object
          })
       }
@@ -121,14 +120,14 @@ export default function Dashboard() {
             
             {parking !== null && (
                <div className="info">
-                  <img className="info-image" src={parking.image} />
-                  <p className="info-label">Name:<p className="info-text">{parking.name}</p></p>
-                  <p className="info-label">Max. parking duration:<p className="info-text">8h</p></p>
-                  <p className="info-label">Vehicles allowed:<p className="info-text">car, bike</p></p>
-                  <p className="info-label">Total spots:<p className="info-text">300</p></p>
-                  <p className="info-label">Coordinates:<p className="info-text">{parking.coordinates[0]}, {parking.coordinates[1]}</p></p>
-                  <p className="info-label">Address:<p className="info-text">5300-252, Bragança, Portugal</p></p>
-                  <p className="info-label">Description:<p className="info-text">University parking located in the center of Bragança.</p></p>
+                  <img className="info-image" alt='' src={parking.image} />
+                  <label className="info-label">Name:<p className="info-text">{parking.name}</p></label>
+                  <label className="info-label">Max. parking duration:<p className="info-text">8h</p></label>
+                  <label className="info-label">Vehicles allowed:<p className="info-text">car, bike</p></label>
+                  <label className="info-label">Total spots:<p className="info-text">300</p></label>
+                  <label className="info-label">Coordinates:<p className="info-text">{parking.coordinates[0]}, {parking.coordinates[1]}</p></label>
+                  <label className="info-label">Address:<p className="info-text">5300-252, Bragança, Portugal</p></label>
+                  <label className="info-label">Description:<p className="info-text">University parking located in the center of Bragança.</p></label>
                </div>
             )}
          </div>
@@ -150,7 +149,7 @@ export default function Dashboard() {
             </div>
                {region !== null && (
                   <div className="info">
-                     <p className="info-label">Name:<p className="info-text">{region.name}</p></p>
+                     <label className="info-label">Name:<p className="info-text">{region.name}</p></label>
                   </div>
                )}
          </div>         
@@ -171,8 +170,8 @@ export default function Dashboard() {
             </div>
                {spot !== null && (
                   <div className="info">
-                     <p className="info-label">ID:<p className="info-text">{spot.id}</p></p>
-                     <p className="info-label">Coordinates:<p className="info-text">{spot.coordinates[0]}, {spot.coordinates[1]}</p></p>
+                     <label className="info-label">ID:<p className="info-text">{spot.id}</p></label>
+                     <label className="info-label">Coordinates:<p className="info-text">{spot.coordinates[0]}, {spot.coordinates[1]}</p></label>
                   </div>
                )}
          </div>
