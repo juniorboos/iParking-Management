@@ -157,10 +157,6 @@
    background-color: #153ae2
 }
 
-button:hover {
-   /* filter: brightness(3); */
-   opacity: 0.8;
-}
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

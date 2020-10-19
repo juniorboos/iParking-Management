@@ -202,7 +202,10 @@ export default function Dashboard() {
                   </div>
                )}
          </div>
-         <Modal
+         <FormModal 
+            show={modalShow}
+            onRequestClose={() => setModalShow(false)}/>
+         {/* <Modal
             className="formModal"
             overlayClassName="overlay"
             isOpen={modalShow}
@@ -266,7 +269,7 @@ export default function Dashboard() {
                   <button type="submit" className="footerButton add">Submit</button>
                </div>
             </form>
-         </Modal>
+         </Modal> */}
          
       </div>
       

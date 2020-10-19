@@ -22,3 +22,8 @@ body {
 input, button, textarea {
     font: 400 18px Roboto, sans-serif
 }
+
+button:hover {
+    /* filter: brightness(3); */
+    opacity: 0.8;
+}
