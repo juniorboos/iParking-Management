@@ -126,7 +126,7 @@ export default function ParkingModal({show, onRequestClose, options}) {
    return (
       <Modal
          ariaHideApp={false}
-         className="formModal"
+         className="formModal parking"
          overlayClassName="overlay"
          isOpen={show}
          closeTimeoutMS={150}

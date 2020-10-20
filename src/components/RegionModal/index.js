@@ -81,7 +81,7 @@ export default function RegionModal({show, onRequestClose, options}) {
    return (
       <Modal
          ariaHideApp={false}
-         className="formModal"
+         className="formModal region"
          overlayClassName="overlay"
          isOpen={show}
          closeTimeoutMS={150}

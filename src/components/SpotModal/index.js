@@ -96,7 +96,7 @@ export default function SpotModal({show, onRequestClose, options}) {
    return (
       <Modal
          ariaHideApp={false}
-         className="formModal"
+         className="formModal spot"
          overlayClassName="overlay"
          isOpen={show}
          closeTimeoutMS={150}
