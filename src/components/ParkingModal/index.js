@@ -26,7 +26,6 @@ export default function ParkingModal({show, onRequestClose, options}) {
 
    useEffect(() => {
       const parking = options.parking
-      console.log(parking)
 
       if(parking !== null) {
          setId(parking.id)
@@ -46,7 +45,7 @@ export default function ParkingModal({show, onRequestClose, options}) {
 
          setVehiclesSelected(vehicles)
       }
-   }, [show, options, vehicleOptions]);
+   }, [options]);
 
    const close = onRequestClose
 
@@ -100,7 +99,7 @@ export default function ParkingModal({show, onRequestClose, options}) {
       close()
    }
 
-   async function deleteRequest () {
+   async function deleteParking () {
 
       try {
          await api.delete(`parkings/${id}`)
@@ -135,69 +134,69 @@ export default function ParkingModal({show, onRequestClose, options}) {
          shouldCloseOnOverlayClick={true}
          onRequestClose={onRequestClose}
       >
-            <form className="form" onSubmit={addParking}>
-               <div className="formDiv">
+         <form className="form" onSubmit={addParking}>
+            <div className="formDiv">
+               <div className="inputDiv">
+                  <label className="inputLabel" >Name</label>
+                  <input required className="input" defaultValue={options.action === 'edit' ? options.parking.name : null} type="text" name="name" onChange={e => setName(e.target.value)} />
+               </div>
+               <div className="inputDiv">
+                  <label className="inputLabel">Description</label>
+                  <textarea required rows={2} className="input" defaultValue={options.action === 'edit' ? options.parking.description : null} style={{height: '96px', resize: 'vertical'}} type="text" name="name" onChange={e => setDescription(e.target.value)} placeholder=""/>
+               </div>
+               <div className="smallInputDiv">
                   <div className="inputDiv">
-                     <label className="inputLabel" >Name</label>
-                     <input required className="input" defaultValue={options.action === 'edit' ? options.parking.name : null} type="text" name="name" onChange={e => setName(e.target.value)} />
-                  </div>
-                  <div className="inputDiv">
-                     <label className="inputLabel">Description</label>
-                     <textarea required rows={2} className="input" defaultValue={options.action === 'edit' ? options.parking.description : null} style={{height: '96px', resize: 'vertical'}} type="text" name="name" onChange={e => setDescription(e.target.value)} placeholder=""/>
-                  </div>
-                  <div className="smallInputDiv">
-                     <div className="inputDiv">
-                        <label className="inputLabel" >Max. parking duration (hours)</label>
-                        <input required className="input" style={{width: 150, textAlign: 'center'}} defaultValue={options.action === 'edit' ? options.parking.maxDuration : 0} type="number" min={0} max={24} name="name" onChange={e => setMaxDuration(e.target.value)}/>
-                     </div>
-                     <div className="inputDiv">
-                        <label className="inputLabel" >Total spots</label>
-                        <input required className="input" style={{width: 150, textAlign: 'center'}} defaultValue={options.action === 'edit' ? options.parking.totalSpots : 0} type="number" min={0} name="name" onChange={e => setTotalSpots(e.target.value)}/>
-                     </div>
+                     <label className="inputLabel" >Max. parking duration (hours)</label>
+                     <input required className="input" style={{width: 150, textAlign: 'center'}} defaultValue={options.action === 'edit' ? options.parking.maxDuration : 0} type="number" min={0} max={24} name="name" onChange={e => setMaxDuration(e.target.value)}/>
                   </div>
                   <div className="inputDiv">
-                     <label className="inputLabel" >Vehicles allowed</label>
-                     <Select
-                        onChange={(selectedOption) => setVehiclesSelected(selectedOption)}
-                        value={vehiclesSelected}
-                        styles={customStyles}
-                        isMulti
-                        name="vehicles"
-                        options={vehicleOptions}
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                     />
-                     <br/>
+                     <label className="inputLabel" >Total spots</label>
+                     <input required className="input" style={{width: 150, textAlign: 'center'}} defaultValue={options.action === 'edit' ? options.parking.totalSpots : 0} type="number" min={0} name="name" onChange={e => setTotalSpots(e.target.value)}/>
                   </div>
-                  <div className="inputDiv">
-                     <label className="inputLabel" >Coordinates</label>
-                     <div>
-                        <input required className="input" style={{width: 150, textAlign: 'center', marginRight: 6}} defaultValue={options.action === 'edit' ? options.parking.coordinates[0] : null} type="text" name="name" onChange={e => setLatitude(e.target.value)} placeholder="Latitude"/>
-                        <input required className="input" style={{width: 150, textAlign: 'center'}} defaultValue={options.action === 'edit' ? options.parking.coordinates[1] : null} type="text" name="name" onChange={e => setLongitude(e.target.value)} placeholder="Longitude"/>
-                     </div>
+               </div>
+               <div className="inputDiv">
+                  <label className="inputLabel" >Vehicles allowed</label>
+                  <Select
+                     onChange={(selectedOption) => setVehiclesSelected(selectedOption)}
+                     value={vehiclesSelected}
+                     styles={customStyles}
+                     isMulti
+                     name="vehicles"
+                     options={vehicleOptions}
+                     className="basic-multi-select"
+                     classNamePrefix="select"
+                  />
+                  <br/>
+               </div>
+               <div className="inputDiv">
+                  <label className="inputLabel" >Coordinates</label>
+                  <div>
+                     <input required className="input" style={{width: 150, textAlign: 'center', marginRight: 6}} defaultValue={options.action === 'edit' ? options.parking.coordinates[0] : null} type="text" name="name" onChange={e => setLatitude(e.target.value)} placeholder="Latitude"/>
+                     <input required className="input" style={{width: 150, textAlign: 'center'}} defaultValue={options.action === 'edit' ? options.parking.coordinates[1] : null} type="text" name="name" onChange={e => setLongitude(e.target.value)} placeholder="Longitude"/>
                   </div>
-                  <div className="inputDiv">
-                     <label className="inputLabel">Address</label>
-                     <input required className="input" defaultValue={options.action === 'edit' ? options.parking.address : null} type="text" name="name" onChange={e => setAddress(e.target.value)} placeholder="Rua João Carvalho, nº 537, Bragança, Portugal, 5300-000"/>
-                  </div>
-                  <div className="inputDiv">
-                     <label className="inputLabel">Image URL</label>
-                     <input required className="input" defaultValue={options.action === 'edit' ? options.parking.image : null} type="text" name="name" onChange={e => setImage(e.target.value)} placeholder="URL"/>
-                  </div>
-                  
-               </div> 
-               <div className="modalFooter">
-                  {options.action === 'add' ?
-                     <button type="submit" className="footerButton add">Submit</button>
-                  :  
-                  <>
-                     <button type="button" onClick={() => deleteRequest()} className="footerButton delete half">Delete</button>
-                     <button type="submit" className="footerButton edit half">Save</button>
-                  </>}
-                  
+               </div>
+               <div className="inputDiv">
+                  <label className="inputLabel">Address</label>
+                  <input required className="input" defaultValue={options.action === 'edit' ? options.parking.address : null} type="text" name="name" onChange={e => setAddress(e.target.value)} placeholder="Rua João Carvalho, nº 537, Bragança, Portugal, 5300-000"/>
+               </div>
+               <div className="inputDiv">
+                  <label className="inputLabel">Image URL</label>
+                  <input required className="input" defaultValue={options.action === 'edit' ? options.parking.image : null} type="text" name="name" onChange={e => setImage(e.target.value)} placeholder="URL"/>
                </div>
                
-            </form>
+            </div> 
+            <div className="modalFooter">
+               {options.action === 'add' ?
+                  <button type="submit" className="footerButton add">Submit</button>
+               :  
+               <>
+                  <button type="button" onClick={() => deleteParking()} className="footerButton delete half">Delete</button>
+                  <button type="submit" className="footerButton edit half">Save</button>
+               </>}
+               
+            </div>
+            
+         </form>
       </Modal>
    )
 }
