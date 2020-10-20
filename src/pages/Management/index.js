@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {MdAdd, MdEdit} from 'react-icons/md';
 import api from '../../services/api'
-import FormModal from '../../components/FormModal'
+import ParkingModal from '../../components/ParkingModal'
 import Select from 'react-select';
 import './styles.css';
 
@@ -14,7 +14,9 @@ export default function Dashboard() {
    const [region, setRegion] = useState(null)
    const [spot, setSpot] = useState(null)
 
-   const [modalShow, setModalShow] = useState(false)
+   const [modalParking, setModalParking] = useState(false)
+   const [modalRegion, setModalRegion] = useState(false)
+   const [modalSpot, setModalSpot] = useState(false)
    const [modalOptions, setModalOptions] = useState({action: '', type: '', object: null})
 
    const loadParkings = () => {
@@ -88,10 +90,24 @@ export default function Dashboard() {
             (action === "edit" && type === "spot" && spot === null)) {
          alert("Select a "+ type + "!")
       } else {
-         setModalShow(true)
+         switch (type) {
+            case 'parking':
+               setModalParking(true)
+               break;
+         
+            case 'region':
+               setModalRegion(true)
+               break
+
+            case 'spot':
+               setModalSpot(true)
+               break
+
+            default:
+               break;
+         }
          setModalOptions({
-            action: action, 
-            type: type,
+            action: action,
             object: object
          })
       }
@@ -175,9 +191,9 @@ export default function Dashboard() {
                   </div>
                )}
          </div>
-         <FormModal 
-            show={modalShow}
-            onRequestClose={() => setModalShow(false)}
+         <ParkingModal 
+            show={modalParking}
+            onRequestClose={() => setModalParking(false)}
             options={modalOptions}/>         
       </div>
       

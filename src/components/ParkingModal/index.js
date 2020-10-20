@@ -5,7 +5,7 @@ import api from '../../services/api'
 import Select from 'react-select';
 import './styles.css';
 
-export default function FormModal({show, onRequestClose, options}) {
+export default function ParkingModal({show, onRequestClose, options}) {
 
    const [id, setId] = useState('')
    const [name, setName] = useState('')
@@ -25,16 +25,18 @@ export default function FormModal({show, onRequestClose, options}) {
    ]
 
    useEffect(() => {
-      if(options.object !== null) {
-         setId(options.object.id)
-         setName(options.object.name)
-         setMaxDuration(options.object.maxDuration)
-         setTotalSpots(options.object.totalSpots)
-         setLatitude(options.object.coordinates[0])
-         setLongitude(options.object.coordinates[1])
-         setAddress(options.object.address)
-         setDescription(options.object.description)
-         setImage(options.object.image)
+      const object = options.object
+
+      if(object !== null) {
+         setId(object.id)
+         setName(object.name)
+         setMaxDuration(object.maxDuration)
+         setTotalSpots(object.totalSpots)
+         setLatitude(object.coordinates[0])
+         setLongitude(object.coordinates[1])
+         setAddress(object.address)
+         setDescription(object.description)
+         setImage(object.image)
 
          const vehicles = []
          options.object.vehiclesAllowed.map((vehicleLabel) => {
@@ -48,7 +50,6 @@ export default function FormModal({show, onRequestClose, options}) {
    const close = onRequestClose
 
    async function addParking(e) {
-      console.log(options)
       e.preventDefault()
       console.log("Adicionando")
 
@@ -99,20 +100,14 @@ export default function FormModal({show, onRequestClose, options}) {
    }
 
    async function deleteRequest () {
-      switch (options.type) {
-         case 'parking':
-            try {
-               await api.delete(`parkings/${id}`)
-               alert('Parking removed successfully!')
-            } catch (err) {
-               alert('Error removing parking, try again.')
-            }
-            break;
-      
-         default:
-            break;
+
+      try {
+         await api.delete(`parkings/${id}`)
+         alert('Parking removed successfully!')
+         close()
+      } catch (err) {
+         alert('Error removing parking, try again.')
       }
-      close()
    }
 
    const customStyles = {
@@ -140,7 +135,6 @@ export default function FormModal({show, onRequestClose, options}) {
          onRequestClose={onRequestClose}
       >
             <form className="form" onSubmit={addParking}>
-               {options.type === 'parking' ?
                <div className="formDiv">
                   <div className="inputDiv">
                      <label className="inputLabel" >Name</label>
@@ -163,7 +157,6 @@ export default function FormModal({show, onRequestClose, options}) {
                   <div className="inputDiv">
                      <label className="inputLabel" >Vehicles allowed</label>
                      <Select
-                        // onChange={(selectedOption, newValue) => setVehiclesSelected([ ...vehiclesSelected, newValue.option.label])}
                         onChange={(selectedOption) => setVehiclesSelected(selectedOption)}
                         value={vehiclesSelected}
                         styles={customStyles}
@@ -192,11 +185,6 @@ export default function FormModal({show, onRequestClose, options}) {
                   </div>
                   
                </div> 
-               : options.type === 'region' ?
-                  null
-               :  
-                  null
-               }  
                <div className="modalFooter">
                   {options.action === 'add' ?
                      <button type="submit" className="footerButton add">Submit</button>
