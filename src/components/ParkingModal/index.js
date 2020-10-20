@@ -163,6 +163,7 @@ export default function ParkingModal({show, onRequestClose, options}) {
                      isMulti
                      name="vehicles"
                      options={vehicleOptions}
+                     placeholder="Select vehicles"
                      className="basic-multi-select"
                      classNamePrefix="select"
                   />

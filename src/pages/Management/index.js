@@ -5,6 +5,7 @@ import ParkingModal from '../../components/ParkingModal'
 import RegionModal from '../../components/RegionModal'
 import Select from 'react-select';
 import './styles.css';
+import SpotModal from '../../components/SpotModal';
 
 export default function Dashboard() {
    const [parkings, setParkings] = useState([])
@@ -18,7 +19,7 @@ export default function Dashboard() {
    const [modalParking, setModalParking] = useState(false)
    const [modalRegion, setModalRegion] = useState(false)
    const [modalSpot, setModalSpot] = useState(false)
-   const [modalOptions, setModalOptions] = useState({action: '', parking: null, region: null})
+   const [modalOptions, setModalOptions] = useState({action: '', parking: null, region: null, spot: null})
 
    const loadParkings = () => {
       api.get('parkings')
@@ -114,6 +115,12 @@ export default function Dashboard() {
             case 'spot':
                console.log("Abrindo spot")
                setModalSpot(true)
+               setModalOptions({
+                  action: action,
+                  parking: parking.id,
+                  region: region.id,
+                  spot: object
+               })
                break
 
             default:
@@ -210,6 +217,11 @@ export default function Dashboard() {
                show={modalRegion}
                onRequestClose={() => setModalRegion(false)}
                options={modalOptions}/>  
+         : modalSpot ?
+            <SpotModal
+               show={modalSpot}
+               onRequestClose={() => setModalSpot(false)}
+               options={modalOptions}/>
          : null}
                  
                 

@@ -4,7 +4,7 @@ import Modal from 'react-modal'
 import api from '../../services/api'
 import './styles.css';
 
-export default function ParkingModal({show, onRequestClose, options}) {
+export default function RegionModal({show, onRequestClose, options}) {
 
    const [id, setId] = useState('')
    const [name, setName] = useState('')
@@ -71,10 +71,10 @@ export default function ParkingModal({show, onRequestClose, options}) {
 
       try {
          await api.delete(`parkings/${options.parking}/${id}`)
-         alert('Parking removed successfully!')
+         alert('Region removed successfully!')
          close()
       } catch (err) {
-         alert('Error removing parking, try again.')
+         alert('Error removing region, try again.')
       }
    }
    
