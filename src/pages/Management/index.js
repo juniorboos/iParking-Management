@@ -154,12 +154,16 @@ export default function Dashboard() {
                <div className="info">
                   <img className="info-image" alt='' src={parking.image} />
                   <label className="info-label">Name:<p className="info-text">{parking.name}</p></label>
-                  <label className="info-label">Max. parking duration:<p className="info-text">8h</p></label>
-                  <label className="info-label">Vehicles allowed:<p className="info-text">car, bike</p></label>
-                  <label className="info-label">Total spots:<p className="info-text">300</p></label>
+                  <label className="info-label">Max. parking duration:<p className="info-text">{parking.maxDuration}h</p></label>
+                  <label className="info-label">Vehicles allowed:
+                     {parking.vehiclesAllowed.map((vehicle, index) => (
+                        <p key={index} className="info-text">{vehicle}{index + 1 !== parking.vehiclesAllowed.length && ','}</p>
+                     ))}
+                  </label>
+                  <label className="info-label">Total spots:<p className="info-text">{parking.totalSpots}</p></label>
                   <label className="info-label">Coordinates:<p className="info-text">{parking.coordinates[0]}, {parking.coordinates[1]}</p></label>
-                  <label className="info-label">Address:<p className="info-text">5300-252, Bragança, Portugal</p></label>
-                  <label className="info-label">Description:<p className="info-text">University parking located in the center of Bragança.</p></label>
+                  <label className="info-label">Address:<p className="info-text">{parking.address}</p></label>
+                  <label className="info-label">Description:<p className="info-text">{parking.description}</p></label>
                </div>
             )}
          </div>
@@ -182,6 +186,8 @@ export default function Dashboard() {
                {region !== null && (
                   <div className="info">
                      <label className="info-label">Name:<p className="info-text">{region.name}</p></label>
+                     <label className="info-label">Coordinates:<p className="info-text">{region.coordinates[0]}, {region.coordinates[1]}</p></label>
+                     <label className="info-label">Description:<p className="info-text">{region.description}</p></label>
                   </div>
                )}
          </div>         
@@ -203,6 +209,7 @@ export default function Dashboard() {
                {spot !== null && (
                   <div className="info">
                      <label className="info-label">ID:<p className="info-text">{spot.id}</p></label>
+                     <label className="info-label">Type:<p className="info-text">{spot.type}</p></label>
                      <label className="info-label">Coordinates:<p className="info-text">{spot.coordinates[0]}, {spot.coordinates[1]}</p></label>
                   </div>
                )}
