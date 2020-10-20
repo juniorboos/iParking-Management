@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {MdAdd, MdEdit} from 'react-icons/md';
 import api from '../../services/api'
 import ParkingModal from '../../components/ParkingModal'
+import RegionModal from '../../components/RegionModal'
 import Select from 'react-select';
 import './styles.css';
 
@@ -17,7 +18,7 @@ export default function Dashboard() {
    const [modalParking, setModalParking] = useState(false)
    const [modalRegion, setModalRegion] = useState(false)
    const [modalSpot, setModalSpot] = useState(false)
-   const [modalOptions, setModalOptions] = useState({action: '', type: '', object: null})
+   const [modalOptions, setModalOptions] = useState({action: '', parking: null, region: null})
 
    const loadParkings = () => {
       api.get('parkings')
@@ -26,13 +27,13 @@ export default function Dashboard() {
                return {...item, value: item.id, label: item.name}
             })
             setParkings(formatArray)
-            console.log("Parkings: ", formatArray)
+            // console.log("Parkings: ", formatArray)
          })
    }
 
    useEffect(() => {
       loadParkings()
-   },[])
+   },[modalParking])
 
    useEffect(() => {
       if (parking !== null) {
@@ -50,7 +51,7 @@ export default function Dashboard() {
             alert('Erro ao encontrar regiões')
          }
       }
-   }, [parking]);
+   }, [parking, modalRegion]);
 
    useEffect(() => {
       if(region !== null) {
@@ -69,7 +70,7 @@ export default function Dashboard() {
             alert('Erro ao encontrar spots')
          }
       }
-   }, [region, parking])
+   }, [region, parking, modalSpot])
 
    
 
@@ -92,24 +93,32 @@ export default function Dashboard() {
       } else {
          switch (type) {
             case 'parking':
+               console.log("Abrindo parking")
                setModalParking(true)
+               setModalOptions({
+                  action: action,
+                  parking: object
+               })
                break;
          
             case 'region':
+               console.log("Abrindo region")
                setModalRegion(true)
+               setModalOptions({
+                  action: action,
+                  parking: parking.id,
+                  region: object
+               })
                break
 
             case 'spot':
+               console.log("Abrindo spot")
                setModalSpot(true)
                break
 
             default:
                break;
          }
-         setModalOptions({
-            action: action,
-            object: object
-         })
       }
       
    }
@@ -191,10 +200,19 @@ export default function Dashboard() {
                   </div>
                )}
          </div>
-         <ParkingModal 
-            show={modalParking}
-            onRequestClose={() => setModalParking(false)}
-            options={modalOptions}/>         
+         {modalParking ? 
+            <ParkingModal 
+               show={modalParking}
+               onRequestClose={() => setModalParking(false)}
+               options={modalOptions}/> 
+         : modalRegion ?
+            <RegionModal 
+               show={modalRegion}
+               onRequestClose={() => setModalRegion(false)}
+               options={modalOptions}/>  
+         : null}
+                 
+                
       </div>
       
    );
