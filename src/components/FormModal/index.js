@@ -71,23 +71,47 @@ export default function FormModal({show, onRequestClose, options}) {
       }
 
       console.log(data)
+
+      switch (options.action) {
+         case 'add':
+            try {
+               await api.post('parkings', data)
+               alert('Parking registered successfully!')
+            } catch (err) {
+               alert('Error registering parking, try again.')
+            }
+            break;
       
-      if(options.action === 'add') {
-         try {
-            await api.post('parkings', data)
-            alert('Parking registered successfully!')
-         } catch (err) {
-            alert('Error registering parking, try again.')
-         }
-      } else {
-         try {
-            await api.put('parkings', {...data, id: id})
-            alert('Parking updated successfully!')
-         } catch (err) {
-            alert('Error updating parking, try again.')
-         }
+         case 'edit':
+            try {
+               await api.put('parkings', {...data, id: id})
+               alert('Parking updated successfully!')
+            } catch (err) {
+               alert('Error updating parking, try again.')
+            }
+            break;
+
+         default:
+            break;
       }
       
+      close()
+   }
+
+   async function deleteRequest () {
+      switch (options.type) {
+         case 'parking':
+            try {
+               await api.delete(`parkings/${id}`)
+               alert('Parking removed successfully!')
+            } catch (err) {
+               alert('Error removing parking, try again.')
+            }
+            break;
+      
+         default:
+            break;
+      }
       close()
    }
 
@@ -178,7 +202,7 @@ export default function FormModal({show, onRequestClose, options}) {
                      <button type="submit" className="footerButton add">Submit</button>
                   :  
                   <>
-                     <button  className="footerButton delete half">Delete</button>
+                     <button type="button" onClick={() => deleteRequest()} className="footerButton delete half">Delete</button>
                      <button type="submit" className="footerButton edit half">Save</button>
                   </>}
                   
