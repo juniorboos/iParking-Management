@@ -9,7 +9,7 @@
    top: 0;
    left: 0;
    border-right: 6px #2C7EFA solid;
-   transition: 1s;
+   transition: 0.7s;
 }
 
 
@@ -90,10 +90,10 @@
    width:0%;
    overflow-x:hidden;
    /* border: 1px solid black; */
-   -webkit-transition: width 0.7s ease-in-out;
-   -moz-transition: width 0.7s ease-in-out;
-   -o-transition: width 0.7s ease-in-out;
-   transition: width 0.7s ease-in-out;
+   -webkit-transition: width 0.5s ease-in-out;
+   -moz-transition: width 0.5s ease-in-out;
+   -o-transition: width 0.5s ease-in-out;
+   transition: width 0.5s ease-in-out;
 }
 
 .contents.active .inner.active {

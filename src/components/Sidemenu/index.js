@@ -6,7 +6,7 @@ import { IconContext } from 'react-icons';
 import './styles.css';
 
 export default function Sidemenu() {
-   const [sidemenu, setSidemenu] = useState(false)
+   const [sidemenu, setSidemenu] = useState(true)
 
    const showSidemenu = () => setSidemenu(!sidemenu)
 
