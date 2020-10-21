@@ -66,13 +66,15 @@ export default function SpotModal({show, onRequestClose, options}) {
    }
 
    async function deleteSpot () {
-
-      try {
-         await api.delete(`parkings/${options.parking}/${options.region}/${id}`)
-         alert('Spot removed successfully!')
-         close()
-      } catch (err) {
-         alert('Error removing spot, try again.')
+      const res = window.confirm("Are you sure you want to delete?\nThis action will be irreversible.")
+      if(res){
+         try {
+            await api.delete(`parkings/${options.parking}/${options.region}/${id}`)
+            alert('Spot removed successfully!')
+            close()
+         } catch (err) {
+            alert('Error removing spot, try again.')
+         }
       }
    }
 

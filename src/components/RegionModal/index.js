@@ -68,13 +68,15 @@ export default function RegionModal({show, onRequestClose, options}) {
    }
 
    async function deleteRegion () {
-
-      try {
-         await api.delete(`parkings/${options.parking}/${id}`)
-         alert('Region removed successfully!')
-         close()
-      } catch (err) {
-         alert('Error removing region, try again.')
+      const res = window.confirm("Are you sure you want to delete?\nThis action will be irreversible.")
+      if(res){
+         try {
+            await api.delete(`parkings/${options.parking}/${id}`)
+            alert('Region removed successfully!')
+            close()
+         } catch (err) {
+            alert('Error removing region, try again.')
+         }
       }
    }
    

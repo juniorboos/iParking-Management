@@ -100,13 +100,15 @@ export default function ParkingModal({show, onRequestClose, options}) {
    }
 
    async function deleteParking () {
-
-      try {
-         await api.delete(`parkings/${id}`)
-         alert('Parking removed successfully!')
-         close()
-      } catch (err) {
-         alert('Error removing parking, try again.')
+      const res = window.confirm("Are you sure you want to delete?\nThis action will be irreversible.")
+      if(res){
+         try {
+            await api.delete(`parkings/${id}`)
+            alert('Parking removed successfully!')
+            close()
+         } catch (err) {
+            alert('Error removing parking, try again.')
+         }
       }
    }
 
