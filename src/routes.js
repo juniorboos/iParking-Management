@@ -9,6 +9,7 @@ import Management from './pages/Management';
 // import NewIncident from './pages/NewIncident'
 
 export default function Routes() {
+
     return (
         <BrowserRouter>
             <Sidemenu />

@@ -5,7 +5,7 @@ import * as IoIcons from 'react-icons/io';
 export const SidemenuData = [
   {
     title: 'Dashboard',
-    path: '/',
+    path: '/dashboard',
     icon: <AiIcons.AiFillHome />,
     cName: 'nav-text'
   },

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import * as FaIcons from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { SidemenuData } from './SidemenuData';
 import { IconContext } from 'react-icons';
 import './styles.css';
@@ -9,7 +9,8 @@ export default function Sidemenu() {
    const [sidemenu, setSidemenu] = useState(true)
 
    const showSidemenu = () => setSidemenu(!sidemenu)
-
+   const location = useLocation()
+   console.log(location.pathname)
    
    return (
       <>
@@ -30,7 +31,7 @@ export default function Sidemenu() {
                   })}
                </ul>
             </div> */}
-            <nav className={sidemenu ? 'nav-menu active' : 'nav-menu'}>
+            <nav style={location.pathname == '/' ? {display: 'none'} : null} className={sidemenu ? 'nav-menu active' : 'nav-menu'}>
             {/* <nav className={'nav-menu'}> */}
                <Link to='#' className="menu-bars" onClick={showSidemenu}>
                   {sidemenu ? (
