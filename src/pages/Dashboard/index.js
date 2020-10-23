@@ -8,7 +8,7 @@ import './styles.css';
 export default function Dashboard() {
 
    return (
-      <div>
+      <div className="wrapper">
          Dashboard
       </div>
    );
