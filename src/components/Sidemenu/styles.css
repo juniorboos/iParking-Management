@@ -1,5 +1,5 @@
 .nav-menu {
-   background: linear-gradient(180deg, #AD00FF 0%, rgba(250, 0, 255, 0.93) 100%);
+   background: linear-gradient(180deg, #AD00FF 0%, rgb(251, 0, 255) 100%);
    /* width: 250px; */
    height: 100vh;
    width: 60px;
@@ -10,6 +10,7 @@
    left: 0;
    border-right: 6px #2C7EFA solid;
    transition: 0.7s;
+   z-index: 1;
 }
 
 
