@@ -6,6 +6,9 @@ import RegionModal from '../../components/RegionModal'
 import Select from 'react-select';
 import './styles.css';
 import SpotModal from '../../components/SpotModal';
+import {getAccessToken} from '../../services/accessToken'
+
+import Login from '../Login'
 
 export default function Dashboard() {
    const [parkings, setParkings] = useState([])
@@ -33,6 +36,7 @@ export default function Dashboard() {
    }
 
    useEffect(() => {
+      console.log('Token: ',getAccessToken())
       loadParkings()
    },[modalParking])
 
