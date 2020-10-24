@@ -37,7 +37,7 @@
    width: 280px;
    border-color: #AD00FF;
 }
-.box input[type = "submit"]{
+.box button{
    border:0;
    background: none;
    display: block;
@@ -51,7 +51,7 @@
    transition: 0.25s;
    cursor: pointer;
 }
-.box input[type = "submit"]:hover{
+.box button:hover{
    background: #00C2FF;
 }
  
