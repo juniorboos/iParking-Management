@@ -13,17 +13,13 @@ export default function Login() {
    const [data, setData] = useState('')
    const history = useHistory()
 
-   const userContext = createContext(data)
-
    function login (e) {
       e.preventDefault()
       const data = { email, password }
       try {
          api.post('authenticate', data, { withCredentials: true })
             .then((response) => {
-               console.log(response)
                if (response && response.data) {
-                  console.log(response.data.token)
                   setData(response.data)
                   setAccessToken(response.data.token)
                   history.push("/dashboard");

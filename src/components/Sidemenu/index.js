@@ -10,7 +10,6 @@ export default function Sidemenu() {
 
    const showSidemenu = () => setSidemenu(!sidemenu)
    const location = useLocation()
-   console.log(location.pathname)
    
    return (
       <>

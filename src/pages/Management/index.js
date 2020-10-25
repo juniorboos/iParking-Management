@@ -6,9 +6,8 @@ import RegionModal from '../../components/RegionModal'
 import Select from 'react-select';
 import './styles.css';
 import SpotModal from '../../components/SpotModal';
-import {getAccessToken} from '../../services/accessToken'
 
-import Login from '../Login'
+import {useHistory} from 'react-router-dom'
 
 export default function Dashboard() {
    const [parkings, setParkings] = useState([])
@@ -23,6 +22,8 @@ export default function Dashboard() {
    const [modalRegion, setModalRegion] = useState(false)
    const [modalSpot, setModalSpot] = useState(false)
    const [modalOptions, setModalOptions] = useState({action: '', parking: null, region: null, spot: null})
+   
+   const history = useHistory()
 
    const loadParkings = () => {
       api.get('parkings')
@@ -31,12 +32,16 @@ export default function Dashboard() {
                return {...item, value: item.id, label: item.name}
             })
             setParkings(formatArray)
-            // console.log("Parkings: ", formatArray)
+         })
+         .catch(err => {
+            if (err.response.status === 401) {
+               alert('Authenticate again!')
+               history.push('/')
+            }
          })
    }
 
    useEffect(() => {
-      console.log('Token: ',getAccessToken())
       loadParkings()
    },[modalParking])
 
@@ -46,11 +51,18 @@ export default function Dashboard() {
          try {
             api.get(`parkings/${parking.id}`)
                .then(response => {
+                  console.log(response.status)
                   const formatArray = response.data.map(function(item) {
                      return {...item, value: item.id, label: item.name}
                   })
                   setRegions(formatArray)
                   console.log("Regions: ", formatArray)
+               })
+               .catch(err => {
+                  if (err.response.status === 401) {
+                     alert('Authenticate again!')
+                     history.push('/')
+                  }
                })
          } catch(err) {
             alert('Erro ao encontrar regiões')
@@ -65,11 +77,18 @@ export default function Dashboard() {
          try {
             api.get(`parkings/${parking.id}/${region.id}`)
                .then(response => {
+                  console.log(response.status)
                   const formatArray = response.data.map(function(item) {
                      return {...item, value: item.id, label: item.id}
                   })
                   setSpots(formatArray)
                   console.log("Spots: ", formatArray)
+               })
+               .catch(err => {
+                  if (err.response.status === 401) {
+                     alert('Authenticate again!')
+                     history.push('/')
+                  }
                })
          } catch(err) {
             alert('Erro ao encontrar spots')
