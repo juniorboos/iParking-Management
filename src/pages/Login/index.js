@@ -1,6 +1,6 @@
 import React, {useState, createContext} from 'react';
 // import {FiLogIn} from 'react-icons/fi';
-// import {Link, useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import api from '../../services/api'
 import {setAccessToken} from '../../services/accessToken'
 // import firebase from '../../services/firebase'
@@ -11,7 +11,7 @@ export default function Login() {
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
    const [data, setData] = useState('')
-
+   const history = useHistory()
 
    const userContext = createContext(data)
 
@@ -22,10 +22,11 @@ export default function Login() {
          api.post('authenticate', data, { withCredentials: true })
             .then((response) => {
                console.log(response)
-               setData(response.data)
                if (response && response.data) {
                   console.log(response.data.token)
-                  // setAccessToken(response.data.token)
+                  setData(response.data)
+                  setAccessToken(response.data.token)
+                  history.push("/dashboard");
                }
             })
       } catch (err) {
