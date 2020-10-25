@@ -6,9 +6,9 @@ import RegionModal from '../../components/RegionModal'
 import Select from 'react-select';
 import './styles.css';
 import SpotModal from '../../components/SpotModal';
-
+import { useSelector, useDispatch } from 'react-redux'
 import {useHistory} from 'react-router-dom'
-
+import { setAccessToken } from '../../services/accessToken';
 export default function Dashboard() {
    const [parkings, setParkings] = useState([])
    const [regions, setRegions] = useState([])
@@ -24,6 +24,13 @@ export default function Dashboard() {
    const [modalOptions, setModalOptions] = useState({action: '', parking: null, region: null, spot: null})
    
    const history = useHistory()
+   const dispatch = useDispatch()
+
+   const logout = () => {
+      alert('Authenticate again!')
+      dispatch({type: 'LOGOUT'})
+      history.push('/')
+   }
 
    const loadParkings = () => {
       api.get('parkings')
@@ -35,8 +42,7 @@ export default function Dashboard() {
          })
          .catch(err => {
             if (err.response.status === 401) {
-               alert('Authenticate again!')
-               history.push('/')
+               logout()
             }
          })
    }
@@ -60,8 +66,7 @@ export default function Dashboard() {
                })
                .catch(err => {
                   if (err.response.status === 401) {
-                     alert('Authenticate again!')
-                     history.push('/')
+                     logout()
                   }
                })
          } catch(err) {
@@ -86,8 +91,7 @@ export default function Dashboard() {
                })
                .catch(err => {
                   if (err.response.status === 401) {
-                     alert('Authenticate again!')
-                     history.push('/')
+                     logout()
                   }
                })
          } catch(err) {

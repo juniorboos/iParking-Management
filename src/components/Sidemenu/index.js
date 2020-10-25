@@ -4,13 +4,15 @@ import { Link, useLocation } from 'react-router-dom';
 import { SidemenuData } from './SidemenuData';
 import { IconContext } from 'react-icons';
 import './styles.css';
+import { useSelector } from 'react-redux'
 
 export default function Sidemenu() {
    const [sidemenu, setSidemenu] = useState(true)
 
    const showSidemenu = () => setSidemenu(!sidemenu)
    const location = useLocation()
-   
+   const user = useSelector(state => state.user)
+
    return (
       <>
          <IconContext.Provider value={{color:'#fff'}}>
@@ -41,6 +43,8 @@ export default function Sidemenu() {
                   
                </Link>
                <ul className="nav-menu-items">
+                  <li>{user.name}</li>
+                  <li>{user.email}</li>
                   {SidemenuData.map((item, index) => {
                      return (
                         <li key={index} className={sidemenu ? 'nav-text active' : 'nav-text'}>
