@@ -15,12 +15,7 @@ export default function Login() {
    const dispatch = useDispatch()
    const user = useSelector(state => state.user)
 
-   useEffect(() => {
-      if (user.name !== '') {
-         history.push('/dashboard')
-      }
-   }, [])
-
+   
    function login (e) {
       e.preventDefault()
       const data = { email, password }
