@@ -6,12 +6,13 @@ import { IconContext } from 'react-icons';
 import './styles.css';
 import { useSelector } from 'react-redux'
 
-export default function Sidemenu() {
+export default function Sidemenu(props) {
    const [sidemenu, setSidemenu] = useState(true)
 
    const showSidemenu = () => setSidemenu(!sidemenu)
    const location = useLocation()
    const user = useSelector(state => state.user)
+   const sidebar = useSelector(state => state.sidebar)
 
    return (
       <>
@@ -32,7 +33,7 @@ export default function Sidemenu() {
                   })}
                </ul>
             </div> */}
-            <nav style={location.pathname == '/' ? {display: 'none'} : null} className={sidemenu ? 'nav-menu active' : 'nav-menu'}>
+            <nav style={!sidebar ? {display: 'none'} : null} className={sidemenu ? 'nav-menu active' : 'nav-menu'}>
             {/* <nav className={'nav-menu'}> */}
                <Link to='#' className="menu-bars" onClick={showSidemenu}>
                   {sidemenu ? (

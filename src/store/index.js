@@ -1,6 +1,7 @@
 import { createStore } from 'redux'
 
 const INITIAL_STATE = {
+   sidebar: false,
    user: {
       name: "",
       email: ""
@@ -10,7 +11,7 @@ const INITIAL_STATE = {
 function user(state = INITIAL_STATE, action) {
    switch (action.type) {
       case 'LOGIN':
-         return { user: action.user }
+         return { sidebar: true, user: action.user }
       case 'LOGOUT':
          return INITIAL_STATE
       default:

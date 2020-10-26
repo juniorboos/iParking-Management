@@ -6,11 +6,12 @@ import Sidemenu from './components/Sidemenu'
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Management from './pages/Management';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function Routes() {
     const [loading, setLoading] = useState(true)
     const dispatch = useDispatch()
+    const sidebar = useSelector(state => state.sidebar)
 
     useEffect(() => {
         api.post("refresh_token", {}, { withCredentials: true })
@@ -28,16 +29,30 @@ export default function Routes() {
             })
     }, [])
 
+    const PrivateRoutes = () => {
+        if (sidebar) {
+            return (
+                <>
+                    <Route path="/dashboard" exact component={Dashboard} />
+                    <Route path="/management" component={Management} />
+                </>
+            )
+        } else {
+            return null
+        }
+    }
+
     if (loading) {
         return <div>loading...</div>
     }
     return (
         <BrowserRouter>
-            <Sidemenu />
+            <Sidemenu show={sidebar}/>
             <Switch>
                 <Route path="/" exact component={Login} />
-                <Route path="/dashboard" exact component={Dashboard} />
-                <Route path="/management" component={Management} />
+                <PrivateRoutes />
+                {/* <Route path="/dashboard" exact component={Dashboard} />
+                <Route path="/management" component={Management} /> */}
                 {/* <Route path="/profile" component={Profile} />
                 <Route path="/incidents/new" component={NewIncident} /> */}
             </Switch>
