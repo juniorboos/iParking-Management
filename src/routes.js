@@ -28,7 +28,7 @@ export default function Routes() {
                 }
                 setLoading(false)
             })
-    }, [dispatch])
+    }, [])
 
     const PrivateRoute = ({ component: Component, ...rest }) => {
         return (
@@ -64,11 +64,12 @@ export default function Routes() {
         return (
             <Route
                 {...rest}
-                render={props =>
-                    dispatch({ type: 'HIDE_SIDEBAR' },
-                        (
-                            <Component {...props} />
-                        ))
+                render={props => (
+                    dispatch({ type: 'HIDE_SIDEBAR' }),
+                    (
+                        <Component {...props} />
+                    )
+                )
                 }
             />
         )

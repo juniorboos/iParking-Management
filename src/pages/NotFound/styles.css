@@ -1,0 +1,12 @@
+.errorWrapper {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+}
+
+.errorImage {
+   width: 700px;
+   height: auto;
+}
