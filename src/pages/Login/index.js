@@ -1,20 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 // import {FiLogIn} from 'react-icons/fi';
 import {useHistory} from 'react-router-dom'
 import api from '../../services/api'
 import {setAccessToken} from '../../services/accessToken'
 // import firebase from '../../services/firebase'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import './styles.css';
 
 export default function Login() {
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
-   const [data, setData] = useState('')
    const history = useHistory()
    const dispatch = useDispatch()
-   const user = useSelector(state => state.user)
-
    
    function login (e) {
       e.preventDefault()

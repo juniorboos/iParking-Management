@@ -6,9 +6,8 @@ import RegionModal from '../../components/RegionModal'
 import Select from 'react-select';
 import './styles.css';
 import SpotModal from '../../components/SpotModal';
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {useHistory} from 'react-router-dom'
-import { setAccessToken } from '../../services/accessToken';
 export default function Dashboard() {
    const [parkings, setParkings] = useState([])
    const [regions, setRegions] = useState([])

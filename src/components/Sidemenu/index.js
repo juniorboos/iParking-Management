@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 import * as FaIcons from 'react-icons/fa';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { SidemenuData } from './SidemenuData';
 import { IconContext } from 'react-icons';
 import './styles.css';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function Sidemenu(props) {
    const [sidemenu, setSidemenu] = useState(true)
 
    const showSidemenu = () => setSidemenu(!sidemenu)
-   const location = useLocation()
    const user = useSelector(state => state.user)
-   const sidebar = useSelector(state => state.sidebar)
+   const dispatch = useDispatch()
+   const history = useHistory()
+
+   const logout = () => {
+      dispatch({type: 'LOGOUT'})
+      history.push('/')
+   }
 
    return (
       <>
@@ -33,7 +38,7 @@ export default function Sidemenu(props) {
                   })}
                </ul>
             </div> */}
-            <nav style={!sidebar ? {display: 'none'} : null} className={sidemenu ? 'nav-menu active' : 'nav-menu'}>
+            <nav style={!props.show ? {display: 'none'} : null} className={sidemenu ? 'nav-menu active' : 'nav-menu'}>
             {/* <nav className={'nav-menu'}> */}
                <Link to='#' className="menu-bars" onClick={showSidemenu}>
                   {sidemenu ? (
@@ -61,6 +66,7 @@ export default function Sidemenu(props) {
                         </li>
                      )
                   })}
+                  <button type="button" onClick={logout}>LOGOUT</button>
                </ul>
             </nav>
          </IconContext.Provider>

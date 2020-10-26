@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React from 'react';
 import './global.css';
 import Routes from './routes'
 import { Provider } from 'react-redux'
