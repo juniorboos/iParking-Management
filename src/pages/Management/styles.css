@@ -89,7 +89,7 @@
    background-color: #000000bb;
 }
 
-.card {
+.wrapper .card {
    display: flex;
    flex-direction: column;
    /* margin: auto; */
