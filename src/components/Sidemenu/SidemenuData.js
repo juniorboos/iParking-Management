@@ -1,18 +1,19 @@
 import React from 'react';
-import * as AiIcons from 'react-icons/ai';
+import * as FaIcons from 'react-icons/fa';
 import * as IoIcons from 'react-icons/io';
+import * as MdIcons from 'react-icons/md';
 
 export const SidemenuData = [
   {
     title: 'Dashboard',
     path: '/dashboard',
-    icon: <AiIcons.AiFillHome />,
+    icon: <MdIcons.MdDashboard />,
     cName: 'nav-text'
   },
   {
     title: 'Management',
     path: '/management',
-    icon: <IoIcons.IoIosPaper />,
+    icon: <FaIcons.FaParking />,
     cName: 'nav-text'
   },
 ];
