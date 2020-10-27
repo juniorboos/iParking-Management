@@ -18,8 +18,6 @@ export default function Routes() {
         api.post("refresh_token", {}, { withCredentials: true })
             .then(response => {
                 if (response.data.ok) {
-                    console.log("Refreshed: ")
-                    console.log(response.data)
                     setAccessToken(response.data.accessToken)
                     dispatch({
                         type: 'LOGIN',
