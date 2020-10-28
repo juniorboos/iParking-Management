@@ -4,6 +4,7 @@ import { setAccessToken } from './services/accessToken';
 import api from './services/api';
 import Sidemenu from './components/Sidemenu'
 import Login from './pages/Login';
+import Admin from './pages/Admin';
 import Dashboard from './pages/Dashboard';
 import Management from './pages/Management';
 import NotFound from './pages/NotFound';
@@ -81,6 +82,7 @@ export default function Routes() {
             <Sidemenu show={sidebar} />
             <Switch>
                 <LoginRoute path="/" exact component={Login} />
+                <Route path="/admin" component={Admin} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/management" component={Management} />
                 <NotFoundRoute component={NotFound} />
