@@ -46,7 +46,7 @@
    flex-direction: column;
    background-color: #FFF;
    align-items: center;
-   justify-content: space-around;
+   justify-content: space-evenly;
    border-radius: 10px;
    margin: 0px 2% 30px;
    
@@ -55,12 +55,38 @@
    overflow: hidden;
 }
 
+.card .image {
+   height: 50%;
+   width: 90%;
+}
+
 .card .label {
    display: flex;
-   height: 100%;
    flex-direction: column;
    justify-content: center;
    align-items: center;
+   font-family: Roboto;
+   font-style: normal;
+}
+
+.upper-cards .label h1 {
+   font-weight: bold;
+   font-size: 48px;
+}
+
+.upper-cards .label h3 {
+   font-weight: normal;
+   font-size: 28px;
+}
+
+.lower-cards .label h1 {
+   font-weight: bold;
+   font-size: 36px;
+}
+
+.lower-cards .label h3 {
+   font-weight: normal;
+   font-size: 20px;
 }
 
 .upper-cards .card {
