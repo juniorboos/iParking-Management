@@ -38,21 +38,18 @@ export default function Login() {
          .auth()
          .signInWithEmailAndPassword(email, password)
          .then(() => {
-            const user = {
-               email: firebase.auth().currentUser.email,
-               name: firebase.auth().currentUser.displayName,
-            };
-            dispatch({
-               type: 'LOGIN', 
-               user: user
-            })
-            // const user = firebase.auth().currentUser;
-            // user.getIdTokenResult().then(idTokenResult => {
-            //    console.log(user)
-            //    user.admin = idTokenResult.claims.admin
-
-            //    if()
-            // })
+            firebase.auth().currentUser.getIdTokenResult().then(idTokenResult => {
+               if(idTokenResult.claims.admin) {
+                   const user = {
+                       email: firebase.auth().currentUser.email,
+                       name: firebase.auth().currentUser.displayName,
+                   };
+                   dispatch({
+                       type: 'LOGIN', 
+                       user: user
+                   })
+               }
+           })
          }).catch((error) => {
             alert(error.toString())
             if (

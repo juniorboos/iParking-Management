@@ -8,27 +8,53 @@ import Admin from './pages/Admin';
 import Dashboard from './pages/Dashboard';
 import Management from './pages/Management';
 import NotFound from './pages/NotFound';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
+import firebase from './services/firebase'
 
 export default function Routes() {
     const [loading, setLoading] = useState(true)
     const dispatch = useDispatch()
     const sidebar = useSelector(state => state.sidebar)
+    // const user = useSelector(state => state.user)
+    
+    // useEffect(() => {
+    //     console.log(user)
+        // api.post("refresh_token", {}, { withCredentials: true })
+        //     .then(response => {
+        //         if (response.data.ok) {
+        //             setAccessToken(response.data.accessToken)
+        //             dispatch({
+        //                 type: 'LOGIN',
+        //                 user: response.data.user
+        //             })
+        //         }
+        //         setLoading(false)
+        //     })
+    // }, [])
 
     useEffect(() => {
-        api.post("refresh_token", {}, { withCredentials: true })
-            .then(response => {
-                if (response.data.ok) {
-                    setAccessToken(response.data.accessToken)
-                    dispatch({
-                        type: 'LOGIN',
-                        user: response.data.user
-                    })
-                }
-                setLoading(false)
-            })
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                console.log("authenticated")
+                user.getIdTokenResult().then(idTokenResult => {
+                    if(idTokenResult.claims.admin) {
+                        const user = {
+                            email: firebase.auth().currentUser.email,
+                            name: firebase.auth().currentUser.displayName,
+                        };
+                        dispatch({
+                            type: 'LOGIN', 
+                            user: user
+                        })
+                    }
+                })
+            } else {
+                console.log("logout")
+            }
+            setLoading(false)
+        });
     }, [])
-
+    
     const PrivateRoute = ({ component: Component, ...rest }) => {
         return (
             <Route
