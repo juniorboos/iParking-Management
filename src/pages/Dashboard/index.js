@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 // import {Link, useHistory} from 'react-router-dom'
 import Select from 'react-select';
 import api from '../../services/api'
+import reservationsImage from '../../assets/reservations.svg'
+import spotsImage from '../../assets/spots.svg'
 
 import './styles.css';
 
@@ -34,8 +36,20 @@ export default function Dashboard() {
          />
          <div className="cards-wrapper">
             <div className="upper-cards">
-               <div className="card"></div>
-               <div className="card"></div>
+               <div className="card">
+                  <img src={reservationsImage} alt=""/>
+                  <div className="label">
+                     <h1>258</h1>
+                     <h3>reservations</h3>
+                  </div>
+               </div>
+               <div className="card">
+                  <img src={spotsImage} alt=""/>
+                  <div className="label">
+                     <h1>64 / 300</h1>
+                     <h3>spots available</h3>
+                  </div>
+               </div>
             </div>
             <div className="lower-cards">
                <div className="card"></div>
