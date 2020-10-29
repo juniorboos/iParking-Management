@@ -45,7 +45,7 @@ export default function SpotModal({show, onRequestClose, options}) {
          case 'add':
             try {
                // await api.post(`parkings/${options.parking}/${options.region}`, data)
-               await spotsRef.add(data)
+               await spotsRef.doc(id).set(data)
                alert('Spot registered successfully!')
                close()
             } catch (err) {
