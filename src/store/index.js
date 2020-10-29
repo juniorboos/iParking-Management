@@ -1,4 +1,5 @@
 import { createStore } from 'redux'
+import firebase from '../services/firebase'
 
 const INITIAL_STATE = {
    sidebar: false,
@@ -13,6 +14,7 @@ function user(state = INITIAL_STATE, action) {
       case 'LOGIN':
          return { sidebar: true, user: action.user, loginPage: false }
       case 'LOGOUT':
+         firebase.auth().signOut()
          return {...INITIAL_STATE, loginPage: true}
       case 'HIDE_SIDEBAR':
          return { ...state, sidebar: false}

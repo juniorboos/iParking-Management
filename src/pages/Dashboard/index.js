@@ -39,14 +39,14 @@ export default function Dashboard() {
          />
          <div className="cards-wrapper">
             <div className="upper-cards">
-               <div className="card">
+               <div className="dashboard-card">
                   <img className="image" src={reservationsImage} alt=""/>
                   <div className="label">
                      <h1>258</h1>
                      <h3>reservations</h3>
                   </div>
                </div>
-               <div className="card">
+               <div className="dashboard-card">
                   <img className="image" src={spotsImage} alt=""/>
                   <div className="label">
                      <h1>64 / 300</h1>
@@ -55,21 +55,21 @@ export default function Dashboard() {
                </div>
             </div>
             <div className="lower-cards">
-               <div className="card">
+               <div className="dashboard-card">
                   <img className="image" src={moneyImage} alt=""/>
                   <div className="label">
                      <h1>€ 2376,75</h1>
                      <h3>gained today</h3>
                   </div>
                </div>
-               <div className="card">
+               <div className="dashboard-card">
                   <img className="image" src={weatherImage} alt=""/>
                   <div className="label">
                      <h1>16 °C</h1>
                      <h3>Cloudy</h3>
                   </div>
                </div>
-               <div className="card">
+               <div className="dashboard-card">
                   <img className="image" src={timeImage} alt=""/>
                   <div className="label">
                      <h1>3h 24min</h1>

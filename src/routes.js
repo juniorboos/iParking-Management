@@ -13,6 +13,7 @@ import firebase from './services/firebase'
 
 export default function Routes() {
     const [loading, setLoading] = useState(true)
+    const [user, setUser] = useState(null)
     const dispatch = useDispatch()
     const sidebar = useSelector(state => state.sidebar)
     // const user = useSelector(state => state.user)
@@ -38,6 +39,7 @@ export default function Routes() {
                 console.log("authenticated")
                 user.getIdTokenResult().then(idTokenResult => {
                     if(idTokenResult.claims.admin) {
+                        setUser(firebase.auth().currentUser)
                         const user = {
                             email: firebase.auth().currentUser.email,
                             name: firebase.auth().currentUser.displayName,
@@ -49,7 +51,7 @@ export default function Routes() {
                     }
                 })
             } else {
-                console.log("logout")
+                dispatch({ type: 'LOGOUT'})
             }
             setLoading(false)
         });
@@ -60,7 +62,7 @@ export default function Routes() {
             <Route
                 {...rest}
                 render={props =>
-                    sidebar ? (
+                    user ? (
                         <Component {...props} />
                     ) : (
                         <Redirect to={{ pathname: '/', state: { from: props.location } }} />
@@ -75,7 +77,7 @@ export default function Routes() {
             <Route
                 {...rest}
                 render={props =>
-                    !sidebar ? (
+                    !user ? (
                         <Component {...props} />
                     ) : (
                         <Redirect to={{ pathname: '/dashboard', state: { from: props.location } }} />
@@ -108,7 +110,7 @@ export default function Routes() {
             <Sidemenu show={sidebar} />
             <Switch>
                 <LoginRoute path="/" exact component={Login} />
-                <Route path="/admin" component={Admin} />
+                <PrivateRoute path="/admin" component={Admin} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/management" component={Management} />
                 <NotFoundRoute component={NotFound} />

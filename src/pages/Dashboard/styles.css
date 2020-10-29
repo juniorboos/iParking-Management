@@ -41,7 +41,7 @@
    justify-content: space-between;
 }
 
-.card {
+.dashboard-card {
    display: flex;
    flex-direction: column;
    background-color: #FFF;
@@ -55,12 +55,12 @@
    overflow: hidden;
 }
 
-.card .image {
+.dashboard-card .image {
    height: 50%;
    width: 90%;
 }
 
-.card .label {
+.dashboard-card .label {
    display: flex;
    flex-direction: column;
    justify-content: center;
@@ -89,11 +89,11 @@
    font-size: 20px;
 }
 
-.upper-cards .card {
+.upper-cards .dashboard-card {
    width: 46%;
 }
 
-.lower-cards .card {
+.lower-cards .dashboard-card {
    width: 28%;
 }
 
@@ -107,11 +107,11 @@
       width: 95%;
    }
 
-   .upper-cards .card {
+   .upper-cards .dashboard-card {
       width: 48%;
    }
 
-   .lower-cards .card {
+   .lower-cards .dashboard-card {
       width: 70%;
    }
 }

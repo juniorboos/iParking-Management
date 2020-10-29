@@ -8,7 +8,11 @@ import './styles.css';
 import SpotModal from '../../components/SpotModal';
 import { useDispatch } from 'react-redux'
 import {useHistory} from 'react-router-dom'
+import firebase from '../../services/firebase'
+
 export default function Dashboard() {
+   const parkingsRef = firebase.firestore().collection('Parkings');
+
    const [parkings, setParkings] = useState([])
    const [regions, setRegions] = useState([])
    const [spots, setSpots] = useState([])
@@ -32,18 +36,29 @@ export default function Dashboard() {
    }
 
    const loadParkings = () => {
-      api.get('parkings')
-         .then(response => {
-            const formatArray = response.data.map(function(item) {
-               return {...item, value: item.id, label: item.name}
+
+      parkingsRef.get()
+         .then((snapshot) => {
+            let parkingsList = []
+            snapshot.forEach(doc => {
+               parkingsList.push({id: doc.id, ... doc.data(), value: doc.id, label: doc.data().name})
             })
-            setParkings(formatArray)
+            setParkings(parkingsList)
          })
-         .catch(err => {
-            if (err.response.status === 401) {
-               logout()
-            }
-         })
+      
+
+      // api.get('parkings')
+      //    .then(response => {
+      //       const formatArray = response.data.map(function(item) {
+      //          return {...item, value: item.id, label: item.name}
+      //       })
+      //       setParkings(formatArray)
+      //    })
+      //    .catch(err => {
+      //       if (err.response.status === 401) {
+      //          // logout()
+      //       }
+      //    })
    }
 
    useEffect(() => {
@@ -53,24 +68,34 @@ export default function Dashboard() {
    useEffect(() => {
       if (parking !== null) {
          setRegion(null)
-         try {
-            api.get(`parkings/${parking.id}`)
-               .then(response => {
-                  console.log(response.status)
-                  const formatArray = response.data.map(function(item) {
-                     return {...item, value: item.id, label: item.name}
-                  })
-                  setRegions(formatArray)
-                  console.log("Regions: ", formatArray)
+
+         parkingsRef.doc(parking.id).collection('Regions').get()
+            .then((snapshot) => {
+               let regionsList = []
+               snapshot.forEach(doc => {
+                  regionsList.push({id: doc.id, ... doc.data(), value: doc.id, label: doc.data().name})
                })
-               .catch(err => {
-                  if (err.response.status === 401) {
-                     logout()
-                  }
-               })
-         } catch(err) {
-            alert('Erro ao encontrar regiões')
-         }
+               setRegions(regionsList)
+            })
+
+         // try {
+         //    api.get(`parkings/${parking.id}`)
+         //       .then(response => {
+         //          console.log(response.status)
+         //          const formatArray = response.data.map(function(item) {
+         //             return {...item, value: item.id, label: item.name}
+         //          })
+         //          setRegions(formatArray)
+         //          console.log("Regions: ", formatArray)
+         //       })
+         //       .catch(err => {
+         //          if (err.response.status === 401) {
+         //             // logout()
+         //          }
+         //       })
+         // } catch(err) {
+         //    alert('Erro ao encontrar regiões')
+         // }
       }
    }, [parking, modalRegion]);
 
@@ -78,24 +103,34 @@ export default function Dashboard() {
       if(region !== null) {
          setSpot(null)
          console.log("Region: ", region)
-         try {
-            api.get(`parkings/${parking.id}/${region.id}`)
-               .then(response => {
-                  console.log(response.status)
-                  const formatArray = response.data.map(function(item) {
-                     return {...item, value: item.id, label: item.id}
-                  })
-                  setSpots(formatArray)
-                  console.log("Spots: ", formatArray)
+
+         parkingsRef.doc(parking.id).collection('Regions').doc(region.id).collection('Spots').get()
+            .then((snapshot) => {
+               let spotsList = []
+               snapshot.forEach(doc => {
+                  spotsList.push({id: doc.id, ... doc.data(), value: doc.id, label: doc.id})
                })
-               .catch(err => {
-                  if (err.response.status === 401) {
-                     logout()
-                  }
-               })
-         } catch(err) {
-            alert('Erro ao encontrar spots')
-         }
+               setSpots(spotsList)
+            })
+         
+         // try {
+         //    api.get(`parkings/${parking.id}/${region.id}`)
+         //       .then(response => {
+         //          console.log(response.status)
+         //          const formatArray = response.data.map(function(item) {
+         //             return {...item, value: item.id, label: item.id}
+         //          })
+         //          setSpots(formatArray)
+         //          console.log("Spots: ", formatArray)
+         //       })
+         //       .catch(err => {
+         //          if (err.response.status === 401) {
+         //             // logout()
+         //          }
+         //       })
+         // } catch(err) {
+         //    alert('Erro ao encontrar spots')
+         // }
       }
    }, [region, parking, modalSpot])
 
@@ -158,7 +193,7 @@ export default function Dashboard() {
 
 
    return (
-      <div className="wrapper">
+      <div className="management-wrapper">
          <div className="card">
             <div className="selectHeader">
               <Select

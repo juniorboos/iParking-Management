@@ -22,7 +22,7 @@
    border: 1px solid rgb(160, 160, 160);
 }
 
-.wrapper {
+.management-wrapper {
    display: flex;
    flex-direction: column;
    justify-content: center;
@@ -89,7 +89,7 @@
    background-color: #000000bb;
 }
 
-.wrapper .card {
+.management-wrapper .card {
    display: flex;
    flex-direction: column;
    /* margin: auto; */
@@ -105,6 +105,7 @@
    justify-content: center;
    /* padding: 20px; */
    border-radius: 10px ;
+   overflow: visible;
    /* border: 1px black solid; */
 }
 
@@ -117,7 +118,7 @@
    /* height: 100px; */
 } 
 
-.select {
+.selectHeader .select {
    width: 100%;
    margin: 0px 20px 0px 20px;
    /* overflow-x: hidden; */
@@ -125,8 +126,8 @@
    /* border-radius: 20px; */
    font-size: 20px;
    /* margin: 40px; */
-
 }
+
 
 .options {
    display: flex;

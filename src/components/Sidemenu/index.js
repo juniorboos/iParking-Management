@@ -18,20 +18,22 @@ export default function Sidemenu(props) {
    const history = useHistory()
 
    const logout = () => {
-      try {
-         api.post('logout', {}, { withCredentials: true })
-            .then(response => {
-               console.log(response.data)
-               if (response.data.ok) {
-                  console.log("Logout successfully ")
-                  setAccessToken('')
-                  dispatch({type: 'LOGOUT'})
-                  history.push('/')
-               }
-            })
-      }catch (err) {
-         console.log(err)
-      }
+      dispatch({type: 'LOGOUT'})
+      history.push('/')
+      // try {
+      //    api.post('logout', {}, { withCredentials: true })
+      //       .then(response => {
+      //          console.log(response.data)
+      //          if (response.data.ok) {
+      //             console.log("Logout successfully ")
+      //             setAccessToken('')
+      //             dispatch({type: 'LOGOUT'})
+      //             history.push('/')
+      //          }
+      //       })
+      // }catch (err) {
+      //    console.log(err)
+      // }
    }
 
    return (
