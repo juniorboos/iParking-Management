@@ -3,9 +3,10 @@ import React, {useState, useEffect} from 'react';
 import Modal from 'react-modal'
 import api from '../../services/api'
 import './styles.css';
+import firebase from '../../services/firebase'
 
 export default function RegionModal({show, onRequestClose, options}) {
-
+   const regionsRef = firebase.firestore().collection('Parkings').doc(options.parking).collection("Regions")
    const [id, setId] = useState('')
    const [name, setName] = useState('')
    const [latitude, setLatitude] = useState(0)
@@ -44,7 +45,8 @@ export default function RegionModal({show, onRequestClose, options}) {
       switch (options.action) {
          case 'add':
             try {
-               await api.post(`parkings/${options.parking}`, data)
+               // await api.post(`parkings/${options.parking}`, data)
+               await regionsRef.add(data)
                alert('Region registered successfully!')
                close()
             } catch (err) {
@@ -54,7 +56,8 @@ export default function RegionModal({show, onRequestClose, options}) {
       
          case 'edit':
             try {
-               await api.put(`parkings/${options.parking}`, {...data, id: id})
+               // await api.put(`parkings/${options.parking}`, {...data, id: id})
+               await regionsRef.doc(id).set(data)
                alert('Region updated successfully!')
                close()
             } catch (err) {
@@ -71,7 +74,8 @@ export default function RegionModal({show, onRequestClose, options}) {
       const res = window.confirm("Are you sure you want to delete?\nThis action will be irreversible.")
       if(res){
          try {
-            await api.delete(`parkings/${options.parking}/${id}`)
+            // await api.delete(`parkings/${options.parking}/${id}`)
+            await regionsRef.doc(id).delete()
             alert('Region removed successfully!')
             close()
          } catch (err) {

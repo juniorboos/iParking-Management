@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react';
 // import {MdAdd, MdEdit} from 'react-icons/md';
 import Modal from 'react-modal'
 import Select from 'react-select';
-import api from '../../services/api'
+// import api from '../../services/api'
 import './styles.css';
+import firebase from '../../services/firebase'
 
 export default function SpotModal({show, onRequestClose, options}) {
-
+   const spotsRef = firebase.firestore().collection('Parkings').doc(options.parking).collection("Regions").doc(options.region).collection("Spots")
+   
    const [id, setId] = useState('')
    const [latitude, setLatitude] = useState(0)
    const [longitude, setLongitude] = useState(0)
@@ -42,7 +44,8 @@ export default function SpotModal({show, onRequestClose, options}) {
       switch (options.action) {
          case 'add':
             try {
-               await api.post(`parkings/${options.parking}/${options.region}`, data)
+               // await api.post(`parkings/${options.parking}/${options.region}`, data)
+               await spotsRef.add(data)
                alert('Spot registered successfully!')
                close()
             } catch (err) {
@@ -52,7 +55,8 @@ export default function SpotModal({show, onRequestClose, options}) {
       
          case 'edit':
             try {
-               await api.put(`parkings/${options.parking}/${options.region}`, {...data, id: id})
+               // await api.put(`parkings/${options.parking}/${options.region}`, {...data, id: id})
+               await spotsRef.doc(id).set(data)
                alert('Spot updated successfully!')
                close()
             } catch (err) {
@@ -69,7 +73,8 @@ export default function SpotModal({show, onRequestClose, options}) {
       const res = window.confirm("Are you sure you want to delete?\nThis action will be irreversible.")
       if(res){
          try {
-            await api.delete(`parkings/${options.parking}/${options.region}/${id}`)
+            // await api.delete(`parkings/${options.parking}/${options.region}/${id}`)
+            await spotsRef.doc(id).delete()
             alert('Spot removed successfully!')
             close()
          } catch (err) {

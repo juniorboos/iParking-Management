@@ -4,9 +4,10 @@ import Modal from 'react-modal'
 import api from '../../services/api'
 import Select from 'react-select';
 import './styles.css';
+import firebase from '../../services/firebase'
 
 export default function ParkingModal({show, onRequestClose, options}) {
-
+   const parkingsRef = firebase.firestore().collection('Parkings');
    const [id, setId] = useState('')
    const [name, setName] = useState('')
    const [maxDuration, setMaxDuration] = useState('')
@@ -76,7 +77,8 @@ export default function ParkingModal({show, onRequestClose, options}) {
       switch (options.action) {
          case 'add':
             try {
-               await api.post('parkings', data)
+               // await api.post('parkings', data)
+               await parkingsRef.add(data)
                alert('Parking registered successfully!')
             } catch (err) {
                alert('Error registering parking, try again.')
@@ -85,7 +87,8 @@ export default function ParkingModal({show, onRequestClose, options}) {
       
          case 'edit':
             try {
-               await api.put('parkings', {...data, id: id})
+               // await api.put('parkings', {...data, id: id})
+               await parkingsRef.doc(id).set(data)
                alert('Parking updated successfully!')
             } catch (err) {
                alert('Error updating parking, try again.')
@@ -103,7 +106,8 @@ export default function ParkingModal({show, onRequestClose, options}) {
       const res = window.confirm("Are you sure you want to delete?\nThis action will be irreversible.")
       if(res){
          try {
-            await api.delete(`parkings/${id}`)
+            // await api.delete(`parkings/${id}`)
+            await parkingsRef.doc(id).delete()
             alert('Parking removed successfully!')
             close()
          } catch (err) {
