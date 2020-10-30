@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 // import {MdAdd, MdEdit} from 'react-icons/md';
 import Modal from 'react-modal'
-import api from '../../services/api'
 import Select from 'react-select';
 import './styles.css';
 import firebase from '../../services/firebase'

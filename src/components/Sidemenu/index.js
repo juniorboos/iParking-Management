@@ -6,8 +6,6 @@ import { SidemenuData } from './SidemenuData';
 import { IconContext } from 'react-icons';
 import './styles.css';
 import { useDispatch, useSelector } from 'react-redux'
-import api from '../../services/api';
-import { setAccessToken } from '../../services/accessToken'
 
 export default function Sidemenu(props) {
    const [sidemenu, setSidemenu] = useState(true)
@@ -20,20 +18,6 @@ export default function Sidemenu(props) {
    const logout = () => {
       dispatch({type: 'LOGOUT'})
       history.push('/')
-      // try {
-      //    api.post('logout', {}, { withCredentials: true })
-      //       .then(response => {
-      //          console.log(response.data)
-      //          if (response.data.ok) {
-      //             console.log("Logout successfully ")
-      //             setAccessToken('')
-      //             dispatch({type: 'LOGOUT'})
-      //             history.push('/')
-      //          }
-      //       })
-      // }catch (err) {
-      //    console.log(err)
-      // }
    }
 
    return (

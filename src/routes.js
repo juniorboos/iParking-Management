@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { setAccessToken } from './services/accessToken';
-import api from './services/api';
 import Sidemenu from './components/Sidemenu'
 import Login from './pages/Login';
 import Admin from './pages/Admin';
@@ -16,22 +14,6 @@ export default function Routes() {
     const [user, setUser] = useState(null)
     const dispatch = useDispatch()
     const sidebar = useSelector(state => state.sidebar)
-    // const user = useSelector(state => state.user)
-    
-    // useEffect(() => {
-    //     console.log(user)
-        // api.post("refresh_token", {}, { withCredentials: true })
-        //     .then(response => {
-        //         if (response.data.ok) {
-        //             setAccessToken(response.data.accessToken)
-        //             dispatch({
-        //                 type: 'LOGIN',
-        //                 user: response.data.user
-        //             })
-        //         }
-        //         setLoading(false)
-        //     })
-    // }, [])
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(function(user) {

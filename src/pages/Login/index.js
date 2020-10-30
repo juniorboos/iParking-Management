@@ -1,8 +1,5 @@
 import React, {useState} from 'react';
 // import {FiLogIn} from 'react-icons/fi';
-import {useHistory} from 'react-router-dom'
-import api from '../../services/api'
-import {setAccessToken} from '../../services/accessToken'
 import firebase from '../../services/firebase'
 import { useDispatch } from 'react-redux'
 import './styles.css';
@@ -10,30 +7,10 @@ import './styles.css';
 export default function Login() {
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
-   const history = useHistory()
    const dispatch = useDispatch()
    
    function login (e) {
       e.preventDefault()
-      // const data = { email, password }
-      // try {
-      //    api.post('authenticate', data, { withCredentials: true })
-      //       .then((response) => {
-      //          if (response && response.data) {
-      //             // setData(response.data)
-      //             dispatch({
-      //                type: 'LOGIN', 
-      //                user: response.data.user
-      //             })
-      //             setAccessToken(response.data.token)
-      //             history.push("/dashboard");
-      //          }
-      //       })
-      // } catch (err) {
-      //    console.log(err)
-      //    alert('An error ocurred, try again.')
-      // }
-
       firebase
          .auth()
          .signInWithEmailAndPassword(email, password)
@@ -53,13 +30,13 @@ export default function Login() {
          }).catch((error) => {
             alert(error.toString())
             if (
-               error == "auth/wrong-password" ||
-               error ==
+               error === "auth/wrong-password" ||
+               error ===
                "The password is invalid or the user does not have a password."
             ) {
                return alert("Wrong Password!");
             }
-            if (error == "auth/invalid-email") {
+            if (error === "auth/invalid-email") {
                return alert("Invalid Email!");
             }
             console.log(error);

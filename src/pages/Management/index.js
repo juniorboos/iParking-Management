@@ -1,13 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {MdAdd, MdEdit} from 'react-icons/md';
-import api from '../../services/api'
 import ParkingModal from '../../components/ParkingModal'
 import RegionModal from '../../components/RegionModal'
 import Select from 'react-select';
 import './styles.css';
 import SpotModal from '../../components/SpotModal';
-import { useDispatch } from 'react-redux'
-import {useHistory} from 'react-router-dom'
 import firebase from '../../services/firebase'
 
 export default function Dashboard() {
@@ -26,39 +23,17 @@ export default function Dashboard() {
    const [modalSpot, setModalSpot] = useState(false)
    const [modalOptions, setModalOptions] = useState({action: '', parking: null, region: null, spot: null})
    
-   const history = useHistory()
-   const dispatch = useDispatch()
-
-   const logout = () => {
-      alert('Authenticate again!')
-      dispatch({type: 'LOGOUT'})
-      history.push('/')
-   }
-
    const loadParkings = () => {
 
       parkingsRef.get()
          .then((snapshot) => {
             let parkingsList = []
             snapshot.forEach(doc => {
-               parkingsList.push({id: doc.id, ... doc.data(), value: doc.id, label: doc.data().name})
+               parkingsList.push({id: doc.id, ...doc.data(), value: doc.id, label: doc.data().name})
             })
             setParkings(parkingsList)
          })
       
-
-      // api.get('parkings')
-      //    .then(response => {
-      //       const formatArray = response.data.map(function(item) {
-      //          return {...item, value: item.id, label: item.name}
-      //       })
-      //       setParkings(formatArray)
-      //    })
-      //    .catch(err => {
-      //       if (err.response.status === 401) {
-      //          // logout()
-      //       }
-      //    })
    }
 
    useEffect(() => {
