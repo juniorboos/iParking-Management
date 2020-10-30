@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import {FiLogIn} from 'react-icons/fi';
 // import {Link, useHistory} from 'react-router-dom'
 import Select from 'react-select';
@@ -8,12 +8,30 @@ import spotsImage from '../../assets/spots.svg'
 import moneyImage from '../../assets/money.svg'
 import timeImage from '../../assets/time.svg'
 import weatherImage from '../../assets/weather.svg'
+import firebase from '../../services/firebase'
 
 import './styles.css';
 
 export default function Dashboard() {
+   const parkingsRef = firebase.firestore().collection('Parkings');
    const [parkings, setParkings] = useState([])
-   const [parking, setParking] = useState()
+   const [parking, setParking] = useState(null)
+
+   const loadParkings = () => {
+      parkingsRef.get()
+         .then((snapshot) => {
+            let parkingsList = []
+            snapshot.forEach(doc => {
+               parkingsList.push({id: doc.id, ... doc.data(), value: doc.id, label: doc.data().name})
+            })
+            setParkings(parkingsList)
+         })
+   }
+
+   useEffect(() => {
+      loadParkings()
+   },[])
+
 
    const customStyles = {
       control: base => ({
