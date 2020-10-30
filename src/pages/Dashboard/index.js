@@ -32,6 +32,10 @@ export default function Dashboard() {
       loadParkings()
    },[])
 
+   useEffect(() => {
+
+   }, [parking])
+
 
    const customStyles = {
       control: base => ({
@@ -91,7 +95,7 @@ export default function Dashboard() {
                   <img className="image" src={timeImage} alt=""/>
                   <div className="label">
                      <h1>3h 24min</h1>
-                     <h3>average time</h3>
+                     <h3>average parking time</h3>
                   </div>
                </div>
             </div>
