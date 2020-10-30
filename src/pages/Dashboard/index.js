@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 // import {FiLogIn} from 'react-icons/fi';
 // import {Link, useHistory} from 'react-router-dom'
 import Select from 'react-select';
-import api from '../../services/api'
 import reservationsImage from '../../assets/reservations.svg'
 import spotsImage from '../../assets/spots.svg'
 import moneyImage from '../../assets/money.svg'
@@ -16,13 +15,14 @@ export default function Dashboard() {
    const parkingsRef = firebase.firestore().collection('Parkings');
    const [parkings, setParkings] = useState([])
    const [parking, setParking] = useState(null)
+   const [reservationsCount, setReservationsCount] = useState(0)
 
    const loadParkings = () => {
       parkingsRef.get()
          .then((snapshot) => {
             let parkingsList = []
             snapshot.forEach(doc => {
-               parkingsList.push({id: doc.id, ... doc.data(), value: doc.id, label: doc.data().name})
+               parkingsList.push({id: doc.id, ...doc.data(), value: doc.id, label: doc.data().name})
             })
             setParkings(parkingsList)
          })
@@ -33,6 +33,19 @@ export default function Dashboard() {
    },[])
 
    useEffect(() => {
+      if (parking !== null) {
+         const currentDate = new Date()
+         const docDate = currentDate.getFullYear().toString() + '-' + (currentDate.getMonth() + 1).toString() + '-' + currentDate.getDate().toString()
+
+         parkingsRef.doc(parking.id).collection('Logs').doc(docDate).get()
+            .then((doc) => {
+               if(!doc.exists) {
+                  setReservationsCount(0)
+               } else {
+                  setReservationsCount(doc.data().reservationsCount)
+               }
+            } )
+      }
 
    }, [parking])
 
@@ -64,7 +77,7 @@ export default function Dashboard() {
                <div className="dashboard-card">
                   <img className="image" src={reservationsImage} alt=""/>
                   <div className="label">
-                     <h1>258</h1>
+                     <h1>{reservationsCount}</h1>
                      <h3>reservations</h3>
                   </div>
                </div>
