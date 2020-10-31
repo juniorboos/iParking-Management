@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-// import {FiLogIn} from 'react-icons/fi';
+import {IoMdRefreshCircle} from 'react-icons/io';
 // import {Link, useHistory} from 'react-router-dom'
+import Skeleton from 'react-loading-skeleton';
 import Select from 'react-select';
 import reservationsImage from '../../assets/reservations.svg'
 import spotsImage from '../../assets/spots.svg'
@@ -17,6 +18,9 @@ export default function Dashboard() {
    const [parking, setParking] = useState(null)
    const [reservationsCount, setReservationsCount] = useState(0)
    const [weather, setWeather] = useState({temp: '', desc: ''})
+   const [availableSpots, setAvailableSpots] = useState('?')
+   const [loading, setLoading] = useState(false)
+   const userId = firebase.auth().currentUser.uid;
 
    const loadParkings = () => {
       parkingsRef.get()
@@ -57,6 +61,31 @@ export default function Dashboard() {
    }, [parking])
 
 
+   async function checkSpots () {
+      setLoading(true)
+      const { data } = await firebase.functions().httpsCallable('searchSpots')({
+         parking: parking.id
+      })
+
+      const userRef = firebase.database().ref('Users/' + userId).child('SearchSpots')
+      var spotsCounter = 0
+      userRef.on('child_added', snapshot => {
+         if(snapshot.val() != null) {
+            console.log("Spot found")
+            spotsCounter ++
+            console.log(snapshot.val())
+         }
+      })
+
+      setTimeout(() => {
+         console.log("Parou de escutar")
+         setLoading(false)
+         setAvailableSpots(spotsCounter)
+         userRef.off()
+         userRef.remove()
+      }, 5000)
+   }
+
    const customStyles = {
       control: base => ({
         ...base,
@@ -84,40 +113,64 @@ export default function Dashboard() {
                <div className="dashboard-card">
                   <img className="image" src={reservationsImage} alt=""/>
                   <div className="label">
-                     <h1>{reservationsCount}</h1>
+                     {parking ? 
+                        <h1>{reservationsCount}</h1>
+                     :  <h1><Skeleton width={100}/></h1> 
+                     }
                      <h3>reservations</h3>
                   </div>
                </div>
                <div className="dashboard-card">
                   <img className="image" src={spotsImage} alt=""/>
                   <div className="label">
-                     <h1>? / {parking ? parking.totalSpots : '?' }</h1>
+                     {parking ? 
+                        <h1>{availableSpots} / {parking.totalSpots}</h1>
+                     :  <h1><Skeleton width={250}/></h1> 
+                     }
                      <h3>spots available</h3>
                   </div>
-                  <button type="button" className="checkSpots">Check now</button>
+                  <button type="button" className="checkSpots" onClick={checkSpots}>
+                     <IoMdRefreshCircle size={32} color="#6200ff"/>
+                  </button>
                </div>
             </div>
             <div className="lower-cards">
                <div className="dashboard-card">
                   <img className="image" src={moneyImage} alt=""/>
                   <div className="label">
-                     <h1>€ 2376,75</h1>
+                     {parking ? 
+                        <h1>€ 2376,75</h1>
+                     :  <h1><Skeleton width={150}/></h1> 
+                     }
                      <h3>gained today</h3>
                   </div>
                </div>
                <div className="dashboard-card">
                   <img className="image" src={weatherImage} alt=""/>
                   <div className="label">
-                     <h1>{weather.temp} °C</h1>
-                     <h3>{weather.desc}</h3>
+                     {parking ? 
+                        <>
+                           <h1>{weather.temp} °C</h1>
+                           <h3>{weather.desc}</h3>
+                        </>
+                     :  
+                        <>
+                           <h1><Skeleton width={120} /></h1>
+                           <h3><Skeleton width={120} /></h3>
+                        </>
+                     }
                   </div>
                </div>
                <div className="dashboard-card">
                   <img className="image" src={timeImage} alt=""/>
                   <div className="label">
-                     <h1>3h 24min</h1>
+                     {parking ? 
+                        <h1>3h 24min</h1>
+                     :  <h1><Skeleton width={160}/></h1> 
+                     }
                      <h3>average parking time</h3>
                   </div>
+                  <button type="button" className="checkSpots"><IoMdRefreshCircle size={32} color="#6200ff"/></button>
                </div>
             </div>
             
