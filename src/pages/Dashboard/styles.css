@@ -66,6 +66,19 @@
    font-style: normal;
 }
 
+.checkSpots {
+   position: absolute;
+   right: 10px;
+   top: 10px;
+   background: none;
+   border: none;
+   cursor: pointer;
+   background-color: #6200ff;
+   color: #fff;
+   padding: 5px 10px;
+   border-radius: 20px;
+}
+
 .upper-cards .label h1 {
    font-weight: bold;
    font-size: 48px;

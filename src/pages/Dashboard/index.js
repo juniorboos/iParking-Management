@@ -16,6 +16,7 @@ export default function Dashboard() {
    const [parkings, setParkings] = useState([])
    const [parking, setParking] = useState(null)
    const [reservationsCount, setReservationsCount] = useState(0)
+   const [weather, setWeather] = useState({temp: '', desc: ''})
 
    const loadParkings = () => {
       parkingsRef.get()
@@ -44,7 +45,13 @@ export default function Dashboard() {
                } else {
                   setReservationsCount(doc.data().reservationsCount)
                }
-            } )
+            })
+         
+         fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${parking.coordinates[0]}&lon=${parking.coordinates[1]}&appid=${process.env.REACT_APP_WEATHER_KEY}&units=metric`)
+            .then(response => response.json())
+            .then(data => {
+               setWeather({temp: data.main.temp, desc: data.weather[0].main})
+            })
       }
 
    }, [parking])
@@ -84,9 +91,10 @@ export default function Dashboard() {
                <div className="dashboard-card">
                   <img className="image" src={spotsImage} alt=""/>
                   <div className="label">
-                     <h1>64 / 300</h1>
+                     <h1>? / {parking ? parking.totalSpots : '?' }</h1>
                      <h3>spots available</h3>
                   </div>
+                  <button type="button" className="checkSpots">Check now</button>
                </div>
             </div>
             <div className="lower-cards">
@@ -100,8 +108,8 @@ export default function Dashboard() {
                <div className="dashboard-card">
                   <img className="image" src={weatherImage} alt=""/>
                   <div className="label">
-                     <h1>16 °C</h1>
-                     <h3>Cloudy</h3>
+                     <h1>{weather.temp} °C</h1>
+                     <h3>{weather.desc}</h3>
                   </div>
                </div>
                <div className="dashboard-card">
