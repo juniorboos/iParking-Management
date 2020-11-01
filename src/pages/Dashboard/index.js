@@ -3,6 +3,7 @@ import {IoMdRefreshCircle} from 'react-icons/io';
 // import {Link, useHistory} from 'react-router-dom'
 import Skeleton from 'react-loading-skeleton';
 import Select from 'react-select';
+import ReactLoading from 'react-loading';
 import reservationsImage from '../../assets/reservations.svg'
 import spotsImage from '../../assets/spots.svg'
 import moneyImage from '../../assets/money.svg'
@@ -21,6 +22,7 @@ export default function Dashboard() {
    const [availableSpots, setAvailableSpots] = useState('?')
    const [averageTime, setAverageTime] = useState('')
    const [loading, setLoading] = useState(false)
+   const [loadingSpots, setLoadingSpots] = useState(false)
    const userId = firebase.auth().currentUser.uid;
 
    const loadParkings = () => {
@@ -54,7 +56,7 @@ export default function Dashboard() {
             .then((doc) => {
                if(!doc.exists) {
                   setReservationsCount(0)
-                  setAverageTime('?')
+                  setAverageTime('Unavailable')
                } else {
                      setReservationsCount(doc.data().reservationsCount)
                      calculateTime(doc.data().reservationsTime, doc.data().reservationsFinished)
@@ -73,7 +75,7 @@ export default function Dashboard() {
 
 
    async function checkSpots () {
-      setLoading(true)
+      setLoadingSpots(true)
       const { data } = await firebase.functions().httpsCallable('searchSpots')({
          parking: parking.id
       })
@@ -90,11 +92,11 @@ export default function Dashboard() {
 
       setTimeout(() => {
          console.log("Parou de escutar")
-         setLoading(false)
+         setLoadingSpots(false)
          setAvailableSpots(spotsCounter)
          userRef.off()
          userRef.remove()
-      }, 5000)
+      }, 3000)
    }
 
    async function checkAverageTime () {
@@ -149,7 +151,10 @@ export default function Dashboard() {
                   <img className="image" src={spotsImage} alt=""/>
                   <div className="label">
                      {parking ? 
-                        <h1>{availableSpots} / {parking.totalSpots}</h1>
+                        !loadingSpots ?
+                           <h1>{availableSpots} / {parking.totalSpots}</h1>
+                        : 
+                           <h1><ReactLoading type="spinningBubbles" color="#ad00ff" /></h1>
                      :  <h1><Skeleton width={250}/></h1> 
                      }
                      <h3>spots available</h3>
