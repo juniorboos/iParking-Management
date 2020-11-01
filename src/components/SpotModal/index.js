@@ -133,8 +133,8 @@ export default function SpotModal({show, onRequestClose, options}) {
                <div className="inputDiv">
                   <label className="inputLabel" >Coordinates</label>
                   <div>
-                     <input required className="input" style={{width: 150, textAlign: 'center', marginRight: 6}} defaultValue={options.action === 'edit' ? options.spot.coordinates[0] : null} type="text" name="name" onChange={e => setLatitude(e.target.value)} placeholder="Latitude"/>
-                     <input required className="input" style={{width: 150, textAlign: 'center'}} defaultValue={options.action === 'edit' ? options.spot.coordinates[1] : null} type="text" name="name" onChange={e => setLongitude(e.target.value)} placeholder="Longitude"/>
+                     <input required className="input" style={{width: 150, textAlign: 'center', marginRight: 6}} defaultValue={options.action === 'edit' ? options.spot.coordinates[0] : null} type="number" name="name" onChange={e => setLatitude(e.target.value)} placeholder="Latitude"/>
+                     <input required className="input" style={{width: 150, textAlign: 'center'}} defaultValue={options.action === 'edit' ? options.spot.coordinates[1] : null} type="number" name="name" onChange={e => setLongitude(e.target.value)} placeholder="Longitude"/>
                   </div>
                </div>                  
             </div> 
