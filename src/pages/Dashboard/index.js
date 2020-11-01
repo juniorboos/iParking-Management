@@ -19,6 +19,7 @@ export default function Dashboard() {
    const [reservationsCount, setReservationsCount] = useState(0)
    const [weather, setWeather] = useState({temp: '', desc: ''})
    const [availableSpots, setAvailableSpots] = useState('?')
+   const [averageTime, setAverageTime] = useState('')
    const [loading, setLoading] = useState(false)
    const userId = firebase.auth().currentUser.uid;
 
@@ -37,6 +38,13 @@ export default function Dashboard() {
       loadParkings()
    },[])
 
+   function calculateTime (reservationsTime, reservationsFinished) { 
+      const average = reservationsTime / reservationsFinished
+      const hours = Math.floor(average / 60);  
+      const minutes = average % 60;
+      setAverageTime(hours + 'h ' + minutes + 'min')
+   }
+
    useEffect(() => {
       if (parking !== null) {
          const currentDate = new Date()
@@ -46,10 +54,13 @@ export default function Dashboard() {
             .then((doc) => {
                if(!doc.exists) {
                   setReservationsCount(0)
+                  setAverageTime('?')
                } else {
-                  setReservationsCount(doc.data().reservationsCount)
+                     setReservationsCount(doc.data().reservationsCount)
+                     calculateTime(doc.data().reservationsTime, doc.data().reservationsFinished)
+                  }
                }
-            })
+            )
          
          fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${parking.coordinates[0]}&lon=${parking.coordinates[1]}&appid=${process.env.REACT_APP_WEATHER_KEY}&units=metric`)
             .then(response => response.json())
@@ -84,6 +95,20 @@ export default function Dashboard() {
          userRef.off()
          userRef.remove()
       }, 5000)
+   }
+
+   async function checkAverageTime () {
+      setLoading(true)
+      const currentDate = new Date()
+      const docDate = currentDate.getFullYear().toString() + '-' + (currentDate.getMonth() + 1).toString() + '-' + currentDate.getDate().toString()
+      const log = await parkingsRef.doc(parking.id).collection('Logs').doc(docDate).get()
+      console.log(log.data())
+      if (typeof log.data() !== 'undefined') {
+         calculateTime(log.data().reservationsTime, log.data().reservationsFinished)
+      } else {
+         setAverageTime('?')
+         alert('Data not available.')
+      }
    }
 
    const customStyles = {
@@ -165,12 +190,14 @@ export default function Dashboard() {
                   <img className="image" src={timeImage} alt=""/>
                   <div className="label">
                      {parking ? 
-                        <h1>3h 24min</h1>
+                        <h1>{averageTime}</h1>
                      :  <h1><Skeleton width={160}/></h1> 
                      }
                      <h3>average parking time</h3>
                   </div>
-                  <button type="button" className="checkSpots"><IoMdRefreshCircle size={32} color="#6200ff"/></button>
+                  <button type="button" className="checkSpots" onClick={checkAverageTime}>
+                     <IoMdRefreshCircle size={32} color="#6200ff"/>
+                  </button>
                </div>
             </div>
             
