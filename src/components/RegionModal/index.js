@@ -30,7 +30,7 @@ export default function RegionModal({show, onRequestClose, options}) {
       e.preventDefault()
       console.log("Adicionando")
 
-      const coordinates = [latitude, longitude]
+      const coordinates = [parseFloat(latitude), parseFloat(longitude)]
 
 
       const data = {
@@ -107,8 +107,8 @@ export default function RegionModal({show, onRequestClose, options}) {
                <div className="inputDiv">
                   <label className="inputLabel" >Coordinates</label>
                   <div>
-                     <input required className="input" style={{width: 150, textAlign: 'center', marginRight: 6}} defaultValue={options.action === 'edit' ? options.region.coordinates[0] : null} type="number" name="name" onChange={e => setLatitude(e.target.value)} placeholder="Latitude"/>
-                     <input required className="input" style={{width: 150, textAlign: 'center'}} defaultValue={options.action === 'edit' ? options.region.coordinates[1] : null} type="number" name="name" onChange={e => setLongitude(e.target.value)} placeholder="Longitude"/>
+                     <input required className="input" style={{width: 150, textAlign: 'center', marginRight: 6}} defaultValue={options.action === 'edit' ? options.region.coordinates[0] : null} type="number" step="any" name="name" onChange={e => setLatitude(e.target.value)} placeholder="Latitude"/>
+                     <input required className="input" style={{width: 150, textAlign: 'center'}} defaultValue={options.action === 'edit' ? options.region.coordinates[1] : null} type="number" step="any" name="name" onChange={e => setLongitude(e.target.value)} placeholder="Longitude"/>
                   </div>
                </div>                  
             </div> 

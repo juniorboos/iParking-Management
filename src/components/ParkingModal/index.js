@@ -177,8 +177,8 @@ export default function ParkingModal({show, onRequestClose, options}) {
                <div className="inputDiv">
                   <label className="inputLabel" >Coordinates</label>
                   <div>
-                     <input required className="input" style={{width: 150, textAlign: 'center', marginRight: 6}} defaultValue={options.action === 'edit' ? options.parking.coordinates[0] : null} type="number" name="name" onChange={e => setLatitude(e.target.value)} placeholder="Latitude"/>
-                     <input required className="input" style={{width: 150, textAlign: 'center'}} defaultValue={options.action === 'edit' ? options.parking.coordinates[1] : null} type="text" name="number" onChange={e => setLongitude(e.target.value)} placeholder="Longitude"/>
+                     <input required className="input" style={{width: 150, textAlign: 'center', marginRight: 6}} defaultValue={options.action === 'edit' ? options.parking.coordinates[0] : null} type="number" step="any" name="name" onChange={e => setLatitude(e.target.value)} placeholder="Latitude"/>
+                     <input required className="input" style={{width: 150, textAlign: 'center'}} defaultValue={options.action === 'edit' ? options.parking.coordinates[1] : null} type="text" name="number" step="any" onChange={e => setLongitude(e.target.value)} placeholder="Longitude"/>
                   </div>
                </div>
                <div className="inputDiv">
