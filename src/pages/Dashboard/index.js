@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {IoMdRefreshCircle} from 'react-icons/io';
+import {IoMdRefresh} from 'react-icons/io';
 // import {Link, useHistory} from 'react-router-dom'
 import Skeleton from 'react-loading-skeleton';
 import Select from 'react-select';
@@ -106,9 +106,10 @@ export default function Dashboard() {
       const log = await parkingsRef.doc(parking.id).collection('Logs').doc(docDate).get()
       console.log(log.data())
       if (typeof log.data() !== 'undefined') {
+         setReservationsCount(log.data().reservationsCount)
          calculateTime(log.data().reservationsTime, log.data().reservationsFinished)
       } else {
-         setAverageTime('?')
+         setAverageTime('Unavailable')
          alert('Data not available.')
       }
    }
@@ -160,7 +161,7 @@ export default function Dashboard() {
                      <h3>spots available</h3>
                   </div>
                   <button type="button" className="checkSpots" onClick={checkSpots}>
-                     <IoMdRefreshCircle size={32} color="#6200ff"/>
+                     <IoMdRefresh size={24} color="#6200ff"/>
                   </button>
                </div>
             </div>
@@ -201,7 +202,7 @@ export default function Dashboard() {
                      <h3>average parking time</h3>
                   </div>
                   <button type="button" className="checkSpots" onClick={checkAverageTime}>
-                     <IoMdRefreshCircle size={32} color="#6200ff"/>
+                     <IoMdRefresh size={24} color="#6200ff"/>
                   </button>
                </div>
             </div>
