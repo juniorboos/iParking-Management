@@ -14,6 +14,7 @@ export default function Routes() {
     const [user, setUser] = useState(null)
     const dispatch = useDispatch()
     const sidebar = useSelector(state => state.sidebar)
+    
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(function(user) {

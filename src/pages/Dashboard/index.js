@@ -23,6 +23,7 @@ export default function Dashboard() {
    const [averageTime, setAverageTime] = useState('')
    const [loading, setLoading] = useState(false)
    const [loadingSpots, setLoadingSpots] = useState(false)
+   const [loadingTime, setLoadingTime] = useState(false)
    const userId = firebase.auth().currentUser.uid;
 
    const loadParkings = () => {
@@ -96,11 +97,11 @@ export default function Dashboard() {
          setAvailableSpots(spotsCounter)
          userRef.off()
          userRef.remove()
-      }, 3000)
+      }, 7000)
    }
 
    async function checkAverageTime () {
-      setLoading(true)
+      setLoadingTime(true)
       const currentDate = new Date()
       const docDate = currentDate.getFullYear().toString() + '-' + (currentDate.getMonth() + 1).toString() + '-' + currentDate.getDate().toString()
       const log = await parkingsRef.doc(parking.id).collection('Logs').doc(docDate).get()
@@ -112,6 +113,7 @@ export default function Dashboard() {
          setAverageTime('Unavailable')
          alert('Data not available.')
       }
+      setLoadingTime(false)
    }
 
    const customStyles = {
@@ -195,8 +197,11 @@ export default function Dashboard() {
                <div className="dashboard-card">
                   <img className="image" src={timeImage} alt=""/>
                   <div className="label">
-                     {parking ? 
-                        <h1>{averageTime}</h1>
+                     {parking ?
+                        !loadingTime ? 
+                           <h1>{averageTime}</h1>
+                        : 
+                           <h1><ReactLoading type="spinningBubbles" color="#ad00ff" /></h1>
                      :  <h1><Skeleton width={160}/></h1> 
                      }
                      <h3>average parking time</h3>
