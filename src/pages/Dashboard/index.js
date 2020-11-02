@@ -45,7 +45,7 @@ export default function Dashboard() {
       const average = reservationsTime / reservationsFinished
       const hours = Math.floor(average / 60);  
       const minutes = average % 60;
-      setAverageTime(hours + 'h ' + minutes + 'min')
+      setAverageTime(hours + 'h ' + minutes.toString().slice(0,2) + 'min')
    }
 
    useEffect(() => {
