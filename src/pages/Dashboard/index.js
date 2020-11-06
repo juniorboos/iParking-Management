@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {IoMdRefresh} from 'react-icons/io';
 // import {Link, useHistory} from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Skeleton from 'react-loading-skeleton';
 import Select from 'react-select';
 import ReactLoading from 'react-loading';
@@ -24,7 +25,7 @@ export default function Dashboard() {
    const [loading, setLoading] = useState(false)
    const [loadingSpots, setLoadingSpots] = useState(false)
    const [loadingTime, setLoadingTime] = useState(false)
-   const userId = firebase.auth().currentUser.uid;
+   const userId = useSelector(state => state.user.id)
 
    const loadParkings = () => {
       parkingsRef.get()

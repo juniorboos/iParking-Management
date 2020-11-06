@@ -14,15 +14,17 @@ export default function Routes() {
     const [user, setUser] = useState(null)
     const dispatch = useDispatch()
     const sidebar = useSelector(state => state.sidebar)
+    const userId = useSelector(state => state.user.id)
 
-    useEffect(() => {
-        firebase.auth().onAuthStateChanged(function(user) {
+    function onAuthStateChange (callback) {
+        return firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                console.log("authenticated")
+                console.log("Authenticated")
                 user.getIdTokenResult().then(idTokenResult => {
                     if(idTokenResult.claims.admin) {
-                        setUser(firebase.auth().currentUser)
+                        // setUser(firebase.auth().currentUser)
                         const user = {
+                            id: firebase.auth().currentUser.uid,
                             email: firebase.auth().currentUser.email,
                             name: firebase.auth().currentUser.displayName,
                         };
@@ -30,13 +32,25 @@ export default function Routes() {
                             type: 'LOGIN', 
                             user: user
                         })
+                        callback(firebase.auth().currentUser)
                     }
                 })
             } else {
+                console.log("Logging out")
+                // setUser(null)
                 dispatch({ type: 'LOGOUT'})
+                callback(null)
             }
             setLoading(false)
-        });
+        })
+    }
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChange(setUser)
+        return () => {
+            console.log('stopped listening')
+            unsubscribe()
+        }
     }, [])
     
     const PrivateRoute = ({ component: Component, ...rest }) => {

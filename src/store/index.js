@@ -4,6 +4,7 @@ import firebase from '../services/firebase'
 const INITIAL_STATE = {
    sidebar: false,
    user: {
+      id: "",
       name: "",
       email: ""
    },

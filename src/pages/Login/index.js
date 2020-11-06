@@ -17,14 +17,15 @@ export default function Login() {
          .then(() => {
             firebase.auth().currentUser.getIdTokenResult().then(idTokenResult => {
                if(idTokenResult.claims.admin) {
-                   const user = {
-                       email: firebase.auth().currentUser.email,
-                       name: firebase.auth().currentUser.displayName,
-                   };
-                   dispatch({
-                       type: 'LOGIN', 
-                       user: user
-                   })
+                  const user = {
+                     id: firebase.auth().currentUser.uid,   
+                     email: firebase.auth().currentUser.email,
+                     name: firebase.auth().currentUser.displayName,
+                  };
+                  dispatch({
+                     type: 'LOGIN', 
+                     user: user
+                  })
                }
            })
          }).catch((error) => {

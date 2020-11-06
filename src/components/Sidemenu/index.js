@@ -13,11 +13,9 @@ export default function Sidemenu(props) {
    const showSidemenu = () => setSidemenu(!sidemenu)
    const user = useSelector(state => state.user)
    const dispatch = useDispatch()
-   const history = useHistory()
 
    const logout = () => {
       dispatch({type: 'LOGOUT'})
-      history.push('/')
    }
 
    return (
