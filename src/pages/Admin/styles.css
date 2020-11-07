@@ -23,7 +23,7 @@
    overflow: hidden;
 }
 
-.card input {
+.admin-wrapper .card input {
    width: 100%;
    padding: 0px 10px;
    height: 50px;
@@ -31,7 +31,7 @@
    border: 1px solid black;
 }
 
-.card button {
+.admin-wrapper .card button {
    background: none;
    border: 1px black solid;
    padding: 5px;

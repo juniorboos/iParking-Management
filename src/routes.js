@@ -8,6 +8,8 @@ import Admin from './pages/Admin';
 import Dashboard from './pages/Dashboard';
 import Management from './pages/Management';
 import NotFound from './pages/NotFound';
+import Analytics from './pages/Analytics';
+
 import { useDispatch, useSelector } from 'react-redux';
 import firebase from './services/firebase'
 
@@ -113,6 +115,7 @@ export default function Routes() {
                 <PrivateRoute path="/admin" component={Admin} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/management" component={Management} />
+                <PrivateRoute path="/analytics" component={Analytics} />
                 <PublicRoute component={NotFound} />
                 {/* <Route path="/profile" component={Profile} />
                 <Route path="/incidents/new" component={NewIncident} /> */}
