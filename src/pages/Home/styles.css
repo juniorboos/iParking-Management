@@ -106,7 +106,7 @@ body {
    justify-content: space-evenly;
 }
 
-.card {
+.cards .card {
    height: 330px;
    width: 330px;
    margin-top: -70px;

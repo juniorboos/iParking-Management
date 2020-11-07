@@ -61,8 +61,10 @@ export default function Routes() {
                 {...rest}
                 render={props =>
                     user ? (
+                        dispatch({ type: 'SHOW_SIDEBAR' }),
                         <Component {...props} />
                     ) : (
+                        dispatch({ type: 'HIDE_SIDEBAR' }),
                         <Redirect to={{ pathname: '/', state: { from: props.location } }} />
                     )
                 }
@@ -76,8 +78,10 @@ export default function Routes() {
                 {...rest}
                 render={props =>
                     !user ? (
+                        dispatch({ type: 'HIDE_SIDEBAR' }),
                         <Component {...props} />
                     ) : (
+                        dispatch({ type: 'SHOW_SIDEBAR' }),
                         <Redirect to={{ pathname: '/dashboard', state: { from: props.location } }} />
                     )
                 }
@@ -85,17 +89,14 @@ export default function Routes() {
         )
     }
 
-    const NotFoundRoute = ({ component: Component, ...rest }) => {
+    const PublicRoute = ({ component: Component, ...rest }) => {
         return (
             <Route
                 {...rest}
                 render={props => (
                     dispatch({ type: 'HIDE_SIDEBAR' }),
-                    (
-                        <Component {...props} />
-                    )
-                )
-                }
+                    <Component {...props} />
+                )}
             />
         )
     }
@@ -107,12 +108,12 @@ export default function Routes() {
         <BrowserRouter>
             <Sidemenu show={sidebar} />
             <Switch>
-                <NotFoundRoute path="/" exact component={Home} />
+                <PublicRoute path="/" exact component={Home} />
                 <LoginRoute path="/login" component={Login} />
                 <PrivateRoute path="/admin" component={Admin} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/management" component={Management} />
-                <NotFoundRoute component={NotFound} />
+                <PublicRoute component={NotFound} />
                 {/* <Route path="/profile" component={Profile} />
                 <Route path="/incidents/new" component={NewIncident} /> */}
             </Switch>

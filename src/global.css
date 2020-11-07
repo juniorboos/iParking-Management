@@ -27,3 +27,25 @@ button:hover {
     /* filter: brightness(3); */
     opacity: 0.8;
 }
+
+/* Designing for scroll-bar */ 
+::-webkit-scrollbar { 
+    width: 6px; 
+ } 
+ 
+ /* Track */ 
+ ::-webkit-scrollbar-track { 
+    background: #ad00ff; 
+    /* border-radius: 5px;  */
+ } 
+ 
+ /* Handle */ 
+ ::-webkit-scrollbar-thumb { 
+    background: rgb(58, 10, 80); 
+    border-radius: 5px; 
+ } 
+ 
+ /* Handle on hover */ 
+ ::-webkit-scrollbar-thumb:hover { 
+    background: rgba(236, 228, 228, 0.349); 
+ } 

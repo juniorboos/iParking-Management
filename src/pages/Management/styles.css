@@ -196,24 +196,3 @@ input[type=number] {
 
 }
 
-/* Designing for scroll-bar */ 
-::-webkit-scrollbar { 
-   width: 6px; 
-} 
-
-/* Track */ 
-::-webkit-scrollbar-track { 
-   background: gainsboro; 
-   border-radius: 5px; 
-} 
-
-/* Handle */ 
-::-webkit-scrollbar-thumb { 
-   background: rgb(149, 42, 199); 
-   border-radius: 5px; 
-} 
-
-/* Handle on hover */ 
-::-webkit-scrollbar-thumb:hover { 
-   background: #555; 
-} 
