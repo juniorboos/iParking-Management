@@ -13,7 +13,7 @@ body {
 }
 
  
- h1 span span {
+.homeTitle span span {
    color: rgb(255, 255, 255);
    position: relative;
    /* bottom: -1em; */

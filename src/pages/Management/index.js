@@ -24,7 +24,6 @@ export default function Dashboard() {
    const [modalOptions, setModalOptions] = useState({action: '', parking: null, region: null, spot: null})
    
    const loadParkings = () => {
-
       parkingsRef.get()
          .then((snapshot) => {
             let parkingsList = []
@@ -33,7 +32,6 @@ export default function Dashboard() {
             })
             setParkings(parkingsList)
          })
-      
    }
 
    useEffect(() => {
@@ -52,25 +50,6 @@ export default function Dashboard() {
                })
                setRegions(regionsList)
             })
-
-         // try {
-         //    api.get(`parkings/${parking.id}`)
-         //       .then(response => {
-         //          console.log(response.status)
-         //          const formatArray = response.data.map(function(item) {
-         //             return {...item, value: item.id, label: item.name}
-         //          })
-         //          setRegions(formatArray)
-         //          console.log("Regions: ", formatArray)
-         //       })
-         //       .catch(err => {
-         //          if (err.response.status === 401) {
-         //             // logout()
-         //          }
-         //       })
-         // } catch(err) {
-         //    alert('Erro ao encontrar regiões')
-         // }
       }
    }, [parking, modalRegion]);
 
@@ -87,25 +66,6 @@ export default function Dashboard() {
                })
                setSpots(spotsList)
             })
-         
-         // try {
-         //    api.get(`parkings/${parking.id}/${region.id}`)
-         //       .then(response => {
-         //          console.log(response.status)
-         //          const formatArray = response.data.map(function(item) {
-         //             return {...item, value: item.id, label: item.id}
-         //          })
-         //          setSpots(formatArray)
-         //          console.log("Spots: ", formatArray)
-         //       })
-         //       .catch(err => {
-         //          if (err.response.status === 401) {
-         //             // logout()
-         //          }
-         //       })
-         // } catch(err) {
-         //    alert('Erro ao encontrar spots')
-         // }
       }
    }, [region, parking, modalSpot])
 
