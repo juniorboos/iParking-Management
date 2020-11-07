@@ -108,7 +108,7 @@ export default function Routes() {
         <BrowserRouter>
             <Sidemenu show={sidebar} />
             <Switch>
-                <PublicRoute path="/" exact component={Home} />
+                <LoginRoute path="/" exact component={Home} />
                 <LoginRoute path="/login" component={Login} />
                 <PrivateRoute path="/admin" component={Admin} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />

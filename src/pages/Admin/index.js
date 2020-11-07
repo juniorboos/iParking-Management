@@ -3,7 +3,7 @@ import firebase from '../../services/firebase'
 
 import './styles.css';
 
-export default function Dashboard() {
+export default function Admin() {
 
    const addAdmin = () => {
       const adminEmail = "miltonboosj@gmail.com"
@@ -14,8 +14,12 @@ export default function Dashboard() {
    }
 
    return (
-      <div className="dashboard-wrapper">
-         <button type="button" onClick={addAdmin}>Tornar admin</button>
+      <div className="admin-wrapper">
+         <div className="card">
+            <input placeholder="Email" type="text" name="adminName" />
+            <button type="button" onClick={addAdmin}>Tornar admin</button>
+         </div>
+         
       </div>
    );
 };
