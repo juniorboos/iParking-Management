@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Sidemenu from './components/Sidemenu'
+
+import Home from './pages/Home';
 import Login from './pages/Login';
 import Admin from './pages/Admin';
 import Dashboard from './pages/Dashboard';
@@ -105,7 +107,8 @@ export default function Routes() {
         <BrowserRouter>
             <Sidemenu show={sidebar} />
             <Switch>
-                <LoginRoute path="/" exact component={Login} />
+                <NotFoundRoute path="/" exact component={Home} />
+                <LoginRoute path="/login" component={Login} />
                 <PrivateRoute path="/admin" component={Admin} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/management" component={Management} />
