@@ -41,6 +41,7 @@ export default function Routes() {
                 })
             } else {
                 console.log("Logging out")
+                alert('You are not ADMIN!')
                 // setUser(null)
                 dispatch({ type: 'LOGOUT'})
                 callback(null)
@@ -54,7 +55,7 @@ export default function Routes() {
         return () => {
             console.log('stopped listening')
             unsubscribe()
-        }
+        }     
     }, [])
     
     const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -106,9 +107,10 @@ export default function Routes() {
     if (loading) {
         return <div>loading...</div>
     }
+
     return (
         <BrowserRouter>
-            <Sidemenu show={sidebar} />
+            {sidebar && (<Sidemenu />) }
             <Switch>
                 <LoginRoute path="/" exact component={Home} />
                 <LoginRoute path="/login" component={Login} />

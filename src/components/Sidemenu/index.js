@@ -7,7 +7,7 @@ import { IconContext } from 'react-icons';
 import './styles.css';
 import { useDispatch, useSelector } from 'react-redux'
 
-export default function Sidemenu(props) {
+export default function Sidemenu() {
    const [sidemenu, setSidemenu] = useState(true)
 
    const showSidemenu = () => setSidemenu(!sidemenu)
@@ -21,7 +21,7 @@ export default function Sidemenu(props) {
    return (
       <>
          <IconContext.Provider value={{color:'#fff'}}>
-            <nav style={!props.show ? {display: 'none'} : null} className={sidemenu ? 'nav-menu active' : 'nav-menu'}>
+            <nav className={sidemenu ? 'nav-menu active' : 'nav-menu'}>
                <Link to='#' className="menu-bars" onClick={showSidemenu}>
                   {sidemenu ? (
                      <FaIcons.FaChevronLeft  />
