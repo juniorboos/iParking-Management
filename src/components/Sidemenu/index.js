@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import * as FaIcons from "react-icons/fa";
+import * as IoIcons from "react-icons/io";
 import * as CgIcons from "react-icons/cg";
 import { Link } from "react-router-dom";
 import { SidemenuData } from "./SidemenuData";
@@ -21,6 +22,9 @@ export default function Sidemenu() {
    return (
       <>
          <IconContext.Provider value={{ color: "#fff" }}>
+            <div className="show-sidebar-btn" onClick={showSidemenu}>
+               <IoIcons.IoMdMenu size={18} />
+            </div>
             <nav className={sidemenu ? "nav-menu active" : "nav-menu"}>
                <Link to="#" className="menu-bars" onClick={showSidemenu}>
                   {sidemenu ? (
