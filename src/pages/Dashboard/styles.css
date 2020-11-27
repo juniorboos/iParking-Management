@@ -127,3 +127,38 @@
       width: 70%;
    }
 }
+
+@media (max-width: 768px) {
+   .dashboard-wrapper {
+      padding: 0px 2.5%;
+   }
+
+   .dashboard-wrapper .select {
+      padding-left: 40px;
+   }
+
+   .cards-wrapper .lower-cards {
+      flex-direction: column;
+   }
+
+   .lower-cards .dashboard-card {
+      width: 96%;
+      flex-direction: row;
+      height: 200px;
+   }
+
+   .lower-cards .dashboard-card .image {
+      height: 80%;
+      width: 40%;
+   }
+
+   .upper-cards .label h1 {
+      font-weight: bold;
+      font-size: 36px;
+   }
+
+   .upper-cards .label h3 {
+      font-weight: normal;
+      font-size: 22px;
+   }
+}
