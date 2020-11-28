@@ -58,25 +58,31 @@ export default function Routes() {
          console.log("stopped listening");
          unsubscribe();
       };
-   }, [dispatch]);
+   });
 
    const PrivateRoute = ({ component: Component, ...rest }) => {
+      useEffect(() => {
+         if (userId === "") {
+            dispatch({ type: "HIDE_SIDEBAR" });
+         } else {
+            dispatch({ type: "SHOW_SIDEBAR" });
+         }
+      });
+
       return (
          <Route
             {...rest}
             render={(props) =>
-               userId !== ""
-                  ? (dispatch({ type: "SHOW_SIDEBAR" }),
-                    (<Component {...props} />))
-                  : (dispatch({ type: "HIDE_SIDEBAR" }),
-                    (
-                       <Redirect
-                          to={{
-                             pathname: "/",
-                             state: { from: props.location },
-                          }}
-                       />
-                    ))
+               userId !== "" ? (
+                  <Component {...props} />
+               ) : (
+                  <Redirect
+                     to={{
+                        pathname: "/",
+                        state: { from: props.location },
+                     }}
+                  />
+               )
             }
          />
       );
@@ -95,18 +101,16 @@ export default function Routes() {
          <Route
             {...rest}
             render={(props) =>
-               userId === ""
-                  ? (dispatch({ type: "HIDE_SIDEBAR" }),
-                    (<Component {...props} />))
-                  : (dispatch({ type: "SHOW_SIDEBAR" }),
-                    (
-                       <Redirect
-                          to={{
-                             pathname: "/dashboard",
-                             state: { from: props.location },
-                          }}
-                       />
-                    ))
+               userId === "" ? (
+                  <Component {...props} />
+               ) : (
+                  <Redirect
+                     to={{
+                        pathname: "/dashboard",
+                        state: { from: props.location },
+                     }}
+                  />
+               )
             }
          />
       );
