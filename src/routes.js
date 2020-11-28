@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Sidemenu from "./components/Sidemenu";
 
@@ -14,44 +14,46 @@ import { useDispatch, useSelector } from "react-redux";
 import firebase from "./services/firebase";
 
 export default function Routes() {
-   const [loading, setLoading] = useState(true);
+   const [loading, setLoading] = useState(false);
    const [user, setUser] = useState(null);
    const dispatch = useDispatch();
    const sidebar = useSelector((state) => state.sidebar);
-   // const userId = useSelector(state => state.user.id)
+   const userId = useSelector((state) => state.user.id);
+
+   const onAuthStateChange = useRef(() => {});
+
+   onAuthStateChange.current = () => {
+      return firebase.auth().onAuthStateChanged((user) => {
+         if (user) {
+            console.log("Authenticated");
+            user.getIdTokenResult().then((idTokenResult) => {
+               if (idTokenResult.claims.admin) {
+                  // setUser(firebase.auth().currentUser)
+                  const user = {
+                     id: firebase.auth().currentUser.uid,
+                     email: firebase.auth().currentUser.email,
+                     name: firebase.auth().currentUser.displayName,
+                  };
+                  dispatch({
+                     type: "LOGIN",
+                     user: user,
+                  });
+                  setUser(firebase.auth().currentUser);
+               }
+            });
+         } else {
+            console.log("Logging out");
+            alert("You are not ADMIN!");
+            // setUser(null)
+            dispatch({ type: "LOGOUT" });
+            setUser(null);
+         }
+         setLoading(false);
+      });
+   };
 
    useEffect(() => {
-      function onAuthStateChange(callback) {
-         return firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-               console.log("Authenticated");
-               user.getIdTokenResult().then((idTokenResult) => {
-                  if (idTokenResult.claims.admin) {
-                     // setUser(firebase.auth().currentUser)
-                     const user = {
-                        id: firebase.auth().currentUser.uid,
-                        email: firebase.auth().currentUser.email,
-                        name: firebase.auth().currentUser.displayName,
-                     };
-                     dispatch({
-                        type: "LOGIN",
-                        user: user,
-                     });
-                     callback(firebase.auth().currentUser);
-                  }
-               });
-            } else {
-               console.log("Logging out");
-               alert("You are not ADMIN!");
-               // setUser(null)
-               dispatch({ type: "LOGOUT" });
-               callback(null);
-            }
-            setLoading(false);
-         });
-      }
-
-      const unsubscribe = onAuthStateChange(setUser);
+      const unsubscribe = onAuthStateChange.current();
       return () => {
          console.log("stopped listening");
          unsubscribe();
@@ -63,7 +65,7 @@ export default function Routes() {
          <Route
             {...rest}
             render={(props) =>
-               user
+               userId !== ""
                   ? (dispatch({ type: "SHOW_SIDEBAR" }),
                     (<Component {...props} />))
                   : (dispatch({ type: "HIDE_SIDEBAR" }),
@@ -81,11 +83,19 @@ export default function Routes() {
    };
 
    const LoginRoute = ({ component: Component, ...rest }) => {
+      useEffect(() => {
+         if (userId === "") {
+            dispatch({ type: "HIDE_SIDEBAR" });
+         } else {
+            dispatch({ type: "SHOW_SIDEBAR" });
+         }
+      });
+
       return (
          <Route
             {...rest}
             render={(props) =>
-               !user
+               userId === ""
                   ? (dispatch({ type: "HIDE_SIDEBAR" }),
                     (<Component {...props} />))
                   : (dispatch({ type: "SHOW_SIDEBAR" }),
@@ -122,7 +132,7 @@ export default function Routes() {
          {sidebar && <Sidemenu />}
          <Switch>
             <LoginRoute path="/" exact component={Home} />
-            <LoginRoute path="/login" component={Login} />
+            <LoginRoute path="/login" exact component={Login} />
             <PrivateRoute path="/admin" component={Admin} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/management" component={Management} />

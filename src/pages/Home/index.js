@@ -104,21 +104,21 @@ export default function Home() {
          </div>
          <div className="cards">
             <div className="card">
-               <img className="cardImage" src={card1} alt="card 1 image" />
+               <img className="cardImage" src={card1} alt="" />
                <div>
                   <h3 className="cardTitle">Multi-agent system</h3>
                   <p className="cardDescription">Best spot for your needs</p>
                </div>
             </div>
             <div className="card">
-               <img className="cardImage" src={card2} alt="card 1 image" />
+               <img className="cardImage" src={card2} alt="" />
                <div>
                   <h3 className="cardTitle">Cloud based</h3>
                   <p className="cardDescription">Fast and efficient</p>
                </div>
             </div>
             <div className="card">
-               <img className="cardImage" src={card3} alt="card 1 image" />
+               <img className="cardImage" src={card3} alt="" />
                <div>
                   <h3 className="cardTitle">Easy to use</h3>
                   <p className="cardDescription">Very intuitive</p>

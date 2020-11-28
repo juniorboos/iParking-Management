@@ -28,23 +28,37 @@ export default function Dashboard() {
    const userId = useSelector((state) => state.user.id);
 
    useEffect(() => {
-      const loadParkings = () => {
-         parkingsRef.get().then((snapshot) => {
-            let parkingsList = [];
-            snapshot.forEach((doc) => {
-               parkingsList.push({
-                  id: doc.id,
-                  ...doc.data(),
-                  value: doc.id,
-                  label: doc.data().name,
-               });
-            });
-            setParkings(parkingsList);
-         });
-      };
+      // const loadParkings = async () => {
+      //    console.log("Checking parkings");
+      //    parkingsRef.get().then((snapshot) => {
+      //       let parkingsList = [];
+      //       snapshot.forEach((doc) => {
+      //          parkingsList.push({
+      //             id: doc.id,
+      //             ...doc.data(),
+      //             value: doc.id,
+      //             label: doc.data().name,
+      //          });
+      //       });
+      //       setParkings(parkingsList);
+      //    });
+      // };
 
-      loadParkings();
-   }, [parkingsRef]);
+      // loadParkings();
+      console.log("Checking parkings");
+      parkingsRef.get().then((snapshot) => {
+         let parkingsList = [];
+         snapshot.forEach((doc) => {
+            parkingsList.push({
+               id: doc.id,
+               ...doc.data(),
+               value: doc.id,
+               label: doc.data().name,
+            });
+         });
+         setParkings(parkingsList);
+      });
+   }, []);
 
    function calculateTime(reservationsTime, reservationsFinished) {
       const average = reservationsTime / reservationsFinished;
@@ -62,7 +76,7 @@ export default function Dashboard() {
             (currentDate.getMonth() + 1).toString() +
             "-" +
             currentDate.getDate().toString();
-
+         console.log("Checking average time");
          parkingsRef
             .doc(parking.id)
             .collection("Logs")
@@ -81,6 +95,7 @@ export default function Dashboard() {
                }
             });
 
+         console.log("Checking weather");
          fetch(
             `http://api.openweathermap.org/data/2.5/weather?lat=${parking.coordinates[0]}&lon=${parking.coordinates[1]}&appid=${process.env.REACT_APP_WEATHER_KEY}&units=metric`
          )
@@ -89,9 +104,10 @@ export default function Dashboard() {
                setWeather({ temp: data.main.temp, desc: data.weather[0].main });
             });
       }
-   }, [parking, parkingsRef]);
+   }, [parking]);
 
    async function checkSpots() {
+      console.log("Checking available spots");
       setLoadingSpots(true);
       const { data } = await firebase.functions().httpsCallable("searchSpots")({
          parking: parking.id,
@@ -122,6 +138,7 @@ export default function Dashboard() {
    }
 
    async function checkAverageTime() {
+      console.log("Checking average time");
       setLoadingTime(true);
       const currentDate = new Date();
       const docDate =
