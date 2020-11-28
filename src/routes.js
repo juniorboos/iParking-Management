@@ -44,7 +44,6 @@ export default function Routes() {
          } else {
             console.log("Logging out");
             alert("You are not ADMIN!");
-            // setUser(null)
             dispatch({ type: "LOGOUT" });
             setUser(null);
          }

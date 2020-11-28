@@ -46,8 +46,8 @@ export default function Dashboard() {
 
       // loadParkings();
       console.log("Checking parkings");
+      let parkingsList = [];
       parkingsRef.get().then((snapshot) => {
-         let parkingsList = [];
          snapshot.forEach((doc) => {
             parkingsList.push({
                id: doc.id,
@@ -56,8 +56,8 @@ export default function Dashboard() {
                label: doc.data().name,
             });
          });
-         setParkings(parkingsList);
       });
+      setParkings(parkingsList);
    }, []);
 
    function calculateTime(reservationsTime, reservationsFinished) {
