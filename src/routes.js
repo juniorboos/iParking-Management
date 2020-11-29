@@ -56,7 +56,7 @@ export default function Routes() {
    useEffect(() => {
       const unsubscribe = onAuthStateChange.current();
       return () => {
-         console.log("stopped listening");
+         // console.log("stopped listening");
          unsubscribe();
       };
    });
