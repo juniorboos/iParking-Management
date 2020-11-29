@@ -29,23 +29,19 @@ export default function Dashboard() {
    });
 
    useEffect(() => {
-      const loadParkings = () => {
-         parkingsRef.get().then((snapshot) => {
-            let parkingsList = [];
-            snapshot.forEach((doc) => {
-               parkingsList.push({
-                  id: doc.id,
-                  ...doc.data(),
-                  value: doc.id,
-                  label: doc.data().name,
-               });
+      let parkingsList = [];
+      parkingsRef.get().then((snapshot) => {
+         snapshot.forEach((doc) => {
+            parkingsList.push({
+               id: doc.id,
+               ...doc.data(),
+               value: doc.id,
+               label: doc.data().name,
             });
-            setParkings(parkingsList);
          });
-      };
-
-      loadParkings();
-   }, [modalParking, parkingsRef]);
+      });
+      setParkings(parkingsList);
+   }, []);
 
    useEffect(() => {
       if (parking !== null) {
@@ -68,7 +64,7 @@ export default function Dashboard() {
                setRegions(regionsList);
             });
       }
-   }, [parking, modalRegion, parkingsRef]);
+   }, [parking]);
 
    useEffect(() => {
       if (region !== null) {
@@ -94,7 +90,7 @@ export default function Dashboard() {
                setSpots(spotsList);
             });
       }
-   }, [region, parking, modalSpot, parkingsRef]);
+   }, [region, parking]);
 
    const customStyles = {
       control: (base) => ({
