@@ -39,11 +39,13 @@ export default function Routes() {
                      user: user,
                   });
                   setUser(firebase.auth().currentUser);
+               } else {
+                  alert("You are not ADMIN!");
+                  dispatch({ type: "LOGOUT" });
                }
             });
          } else {
             console.log("Logging out");
-            alert("You are not ADMIN!");
             dispatch({ type: "LOGOUT" });
             setUser(null);
          }
