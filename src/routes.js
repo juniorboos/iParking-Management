@@ -15,7 +15,6 @@ import firebase from "./services/firebase";
 
 export default function Routes() {
    const [loading, setLoading] = useState(false);
-   const [user, setUser] = useState(null);
    const dispatch = useDispatch();
    const sidebar = useSelector((state) => state.sidebar);
    const userId = useSelector((state) => state.user.id);
@@ -38,7 +37,6 @@ export default function Routes() {
                      type: "LOGIN",
                      user: user,
                   });
-                  setUser(firebase.auth().currentUser);
                } else {
                   alert("You are not ADMIN!");
                   dispatch({ type: "LOGOUT" });
@@ -47,7 +45,6 @@ export default function Routes() {
          } else {
             console.log("Logging out");
             dispatch({ type: "LOGOUT" });
-            setUser(null);
          }
          setLoading(false);
       });
