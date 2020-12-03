@@ -10,14 +10,14 @@
    overflow: auto;
 }
 
-.admin-wrapper .card {
+.admin-wrapper .card-admin {
    display: flex;
-   flex-direction: row;
-   background-color: #FFF;
+   flex-direction: column;
+   background-color: #fff;
    align-items: center;
    justify-content: space-evenly;
    border-radius: 10px;
-   margin: 0px 2% 30px;
+   margin: 0px 2%;
    padding: 20px;
    width: 700px;
    /* height: 350px; */
@@ -25,7 +25,12 @@
    overflow: hidden;
 }
 
-.admin-wrapper .card input {
+.make-admin {
+   display: flex;
+   flex-direction: row;
+}
+
+.admin-wrapper .card-admin input {
    width: 100%;
    padding: 0px 10px;
    height: 48px;
@@ -33,7 +38,7 @@
    border: 1px solid rgb(160, 160, 160);
 }
 
-.admin-wrapper .card button {
+.admin-wrapper .card-admin button {
    background: none;
    background-color: blueviolet;
    border: none;
@@ -44,4 +49,44 @@
    width: 180px;
    margin-left: 20px;
    border-radius: 10px;
+}
+
+.admin-list {
+   width: 100%;
+   margin-top: 18px;
+   border: 1px solid black;
+   border-bottom: none;
+}
+
+.user-admin {
+   display: flex;
+   flex-direction: row;
+   width: 100%;
+   height: 30px;
+   align-items: center;
+   border-bottom: 1px solid black;
+}
+
+.user-field {
+   display: flex;
+   align-items: center;
+   width: 30%;
+   height: 100%;
+   border-right: 1px solid black;
+   padding: 6px;
+}
+
+.user-remove {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 10%;
+   height: 100%;
+   color: white;
+   cursor: pointer;
+   background-color: rgb(206, 1, 1);
+}
+
+.user-remove:hover {
+   background-color: rgb(131, 0, 0);
 }

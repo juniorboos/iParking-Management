@@ -15,9 +15,11 @@ import firebase from "./services/firebase";
 
 export default function Routes() {
    const [loading, setLoading] = useState(false);
+   // const [user, setUser] = useState(null);
    const dispatch = useDispatch();
    const sidebar = useSelector((state) => state.sidebar);
-   const userId = useSelector((state) => state.user.id);
+   // const userId = useSelector((state) => state.user.id);
+   const user = firebase.auth().currentUser;
 
    const onAuthStateChange = useRef(() => {});
 
@@ -27,7 +29,7 @@ export default function Routes() {
             console.log("Authenticated");
             user.getIdTokenResult().then((idTokenResult) => {
                if (idTokenResult.claims.admin) {
-                  // setUser(firebase.auth().currentUser)
+                  // setUser(firebase.auth().currentUser);
                   const user = {
                      id: firebase.auth().currentUser.uid,
                      email: firebase.auth().currentUser.email,
@@ -38,11 +40,13 @@ export default function Routes() {
                      user: user,
                   });
                } else {
+                  // setUser(null);
                   alert("You are not ADMIN!");
                   dispatch({ type: "LOGOUT" });
                }
             });
          } else {
+            // setUser(null);
             console.log("Logging out");
             dispatch({ type: "LOGOUT" });
          }
@@ -60,7 +64,7 @@ export default function Routes() {
 
    const PrivateRoute = ({ component: Component, ...rest }) => {
       useEffect(() => {
-         if (userId === "") {
+         if (user === null) {
             dispatch({ type: "HIDE_SIDEBAR" });
          } else {
             dispatch({ type: "SHOW_SIDEBAR" });
@@ -71,7 +75,7 @@ export default function Routes() {
          <Route
             {...rest}
             render={(props) =>
-               userId !== "" ? (
+               user !== null ? (
                   <Component {...props} />
                ) : (
                   <Redirect
@@ -88,7 +92,7 @@ export default function Routes() {
 
    const LoginRoute = ({ component: Component, ...rest }) => {
       useEffect(() => {
-         if (userId === "") {
+         if (user === null) {
             dispatch({ type: "HIDE_SIDEBAR" });
          } else {
             dispatch({ type: "SHOW_SIDEBAR" });
@@ -99,7 +103,7 @@ export default function Routes() {
          <Route
             {...rest}
             render={(props) =>
-               userId === "" ? (
+               user === null ? (
                   <Component {...props} />
                ) : (
                   <Redirect

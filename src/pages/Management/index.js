@@ -29,6 +29,7 @@ export default function Dashboard() {
    });
 
    useEffect(() => {
+      console.log("Checking parkings");
       let parkingsList = [];
       parkingsRef.get().then((snapshot) => {
          snapshot.forEach((doc) => {
@@ -45,6 +46,7 @@ export default function Dashboard() {
 
    useEffect(() => {
       if (parking !== null) {
+         console.log("Checking regions");
          setRegion(null);
 
          parkingsRef
@@ -68,6 +70,7 @@ export default function Dashboard() {
 
    useEffect(() => {
       if (region !== null) {
+         console.log("Checking spots");
          setSpot(null);
          console.log("Region: ", region);
 

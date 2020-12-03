@@ -9,7 +9,7 @@
    top: 0;
    left: 0;
    border-right: 6px #2c7efa solid;
-   transition: 0.7s;
+   transition: width 0.7s;
    z-index: 1;
 }
 
