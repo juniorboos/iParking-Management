@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import Select from "react-select";
 import "./styles.css";
-import firebase from "../../services/firebase";
+import firebase, { GeoFirestore } from "../../services/firebase";
 
 export default function ParkingModal({ show, onRequestClose, options }) {
    const parkingsRef = firebase.firestore().collection("Parkings");
@@ -47,7 +47,7 @@ export default function ParkingModal({ show, onRequestClose, options }) {
 
          setVehiclesSelected(vehicles);
       }
-   }, [options, vehicleOptions]);
+   }, [options]);
 
    const close = onRequestClose;
 
@@ -55,7 +55,11 @@ export default function ParkingModal({ show, onRequestClose, options }) {
       e.preventDefault();
       console.log("Adicionando");
 
-      const coordinates = [latitude, longitude];
+      // const coordinates = [latitude, longitude];
+      const coordinates = new firebase.firestore.GeoPoint(
+         Number(latitude),
+         Number(longitude)
+      );
 
       var vehiclesAllowed = [];
       vehiclesSelected.map((item) => {
@@ -74,14 +78,16 @@ export default function ParkingModal({ show, onRequestClose, options }) {
       };
 
       console.log(data);
+      const geocollection = GeoFirestore.collection("Parkings");
 
       switch (options.action) {
          case "add":
             try {
                // await api.post('parkings', data)
-               await parkingsRef.add(data);
+               await geocollection.add(data);
                alert("Parking registered successfully!");
             } catch (err) {
+               console.log("ERRO: " + err);
                alert("Error registering parking, try again.");
             }
             break;
@@ -89,7 +95,7 @@ export default function ParkingModal({ show, onRequestClose, options }) {
          case "edit":
             try {
                // await api.put('parkings', {...data, id: id})
-               await parkingsRef.doc(id).set(data);
+               await geocollection.doc(id).set(data);
                alert("Parking updated successfully!");
             } catch (err) {
                alert("Error updating parking, try again.");
