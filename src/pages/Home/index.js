@@ -164,8 +164,7 @@ export default function Home() {
               <div className="leftFeatureText">
                 <h3 className="featureTitle">Request spots</h3>
                 <h4 className="featureDescription">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                  iumod tempor incididunt
+                  With simple interface, request a spot with custom parameters
                 </h4>
               </div>
               <img
@@ -178,8 +177,7 @@ export default function Home() {
               <div className="leftFeatureText">
                 <h3 className="featureTitle">Search parkings</h3>
                 <h4 className="featureDescription">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                  iumod tempor incididunt
+                  Search for near parkings anywhere without complicating things
                 </h4>
               </div>
               <img
@@ -190,10 +188,10 @@ export default function Home() {
             </div>
             <div className="leftFeature">
               <div className="leftFeatureText">
-                <h3 className="featureTitle">Request spots</h3>
+                <h3 className="featureTitle">Available spots</h3>
                 <h4 className="featureDescription">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                  iumod tempor incididunt
+                  Check for available spots in any parking, real-time response
+                  any time!
                 </h4>
               </div>
               <img
@@ -218,8 +216,8 @@ export default function Home() {
               <div className="rightFeatureText">
                 <h3 className="featureTitle">View profile</h3>
                 <h4 className="featureDescription">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                  iumod tempor incididunt
+                  View your basic information, manage your vehicles and check
+                  analytics
                 </h4>
               </div>
             </div>
@@ -232,8 +230,8 @@ export default function Home() {
               <div className="rightFeatureText">
                 <h3 className="featureTitle">See reservations</h3>
                 <h4 className="featureDescription">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                  iumod tempor incididunt
+                  Free access to all future or past reservations, and view their
+                  informations
                 </h4>
               </div>
             </div>
@@ -246,8 +244,7 @@ export default function Home() {
               <div className="rightFeatureText">
                 <h3 className="featureTitle">Flat design</h3>
                 <h4 className="featureDescription">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                  iumod tempor incididunt
+                  Simple, two-dimensional elements and bright colors.
                 </h4>
               </div>
             </div>
